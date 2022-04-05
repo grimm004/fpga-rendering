@@ -56,7 +56,7 @@
 //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
 //----------------------------------------------------------------------------
-// clk_25mhz__25.20325______0.000______50.0______250.645____193.920
+// clk_25mhz__25.00000______0.000______50.0______352.369____261.747
 //
 //----------------------------------------------------------------------------
 // Input Clock   Freq (MHz)    Input Jitter (UI)
@@ -71,7 +71,7 @@ module clock_gen_clk_wiz
   // Clock out ports
   output        clk_25mhz,
   // Status and control signals
-  input         resetn,
+  input         reset,
   output        locked,
   input         clk_100mhz
  );
@@ -120,12 +120,12 @@ wire clk_in2_clock_gen;
 
   PLLE2_ADV
   #(.BANDWIDTH            ("OPTIMIZED"),
-    .COMPENSATION         ("ZHOLD"),
+    .COMPENSATION         ("BUF_IN"),
     .STARTUP_WAIT         ("FALSE"),
-    .DIVCLK_DIVIDE        (3),
-    .CLKFBOUT_MULT        (31),
+    .DIVCLK_DIVIDE        (4),
+    .CLKFBOUT_MULT        (33),
     .CLKFBOUT_PHASE       (0.000),
-    .CLKOUT0_DIVIDE       (41),
+    .CLKOUT0_DIVIDE       (33),
     .CLKOUT0_PHASE        (0.000),
     .CLKOUT0_DUTY_CYCLE   (0.500),
     .CLKIN1_PERIOD        (10.000))
@@ -157,7 +157,7 @@ wire clk_in2_clock_gen;
     .LOCKED              (locked_int),
     .PWRDWN              (1'b0),
     .RST                 (reset_high));
-  assign reset_high = ~resetn; 
+  assign reset_high = reset; 
 
   assign locked = locked_int;
 // Clock Monitor clock assigning

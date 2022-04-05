@@ -1,10 +1,10 @@
 -- Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2021.1 (win64) Build 3247384 Thu Jun 10 19:36:33 MDT 2021
--- Date        : Tue Mar 15 01:46:51 2022
+-- Tool Version: Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
+-- Date        : Sat Apr  2 00:31:11 2022
 -- Host        : MAX-DESKTOP running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               f:/Users/Max/Desktop/project/fpga_rendering/fpga_rendering.gen/sources_1/ip/clock_gen/clock_gen_sim_netlist.vhdl
+--               f:/Users/Max/Desktop/fpga_rendering/fpga_rendering.gen/sources_1/ip/clock_gen/clock_gen_sim_netlist.vhdl
 -- Design      : clock_gen
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -17,7 +17,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity clock_gen_clk_wiz is
   port (
     clk_25mhz : out STD_LOGIC;
-    resetn : in STD_LOGIC;
+    reset : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_100mhz : in STD_LOGIC
   );
@@ -28,7 +28,6 @@ architecture STRUCTURE of clock_gen_clk_wiz is
   signal clk_25mhz_clock_gen : STD_LOGIC;
   signal clkfbout_buf_clock_gen : STD_LOGIC;
   signal clkfbout_clock_gen : STD_LOGIC;
-  signal reset_high : STD_LOGIC;
   signal NLW_plle2_adv_inst_CLKOUT1_UNCONNECTED : STD_LOGIC;
   signal NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED : STD_LOGIC;
   signal NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED : STD_LOGIC;
@@ -69,11 +68,11 @@ clkout1_buf: unisim.vcomponents.BUFG
 plle2_adv_inst: unisim.vcomponents.PLLE2_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
-      CLKFBOUT_MULT => 31,
+      CLKFBOUT_MULT => 33,
       CLKFBOUT_PHASE => 0.000000,
       CLKIN1_PERIOD => 10.000000,
       CLKIN2_PERIOD => 0.000000,
-      CLKOUT0_DIVIDE => 41,
+      CLKOUT0_DIVIDE => 33,
       CLKOUT0_DUTY_CYCLE => 0.500000,
       CLKOUT0_PHASE => 0.000000,
       CLKOUT1_DIVIDE => 1,
@@ -91,8 +90,8 @@ plle2_adv_inst: unisim.vcomponents.PLLE2_ADV
       CLKOUT5_DIVIDE => 1,
       CLKOUT5_DUTY_CYCLE => 0.500000,
       CLKOUT5_PHASE => 0.000000,
-      COMPENSATION => "ZHOLD",
-      DIVCLK_DIVIDE => 3,
+      COMPENSATION => "BUF_IN",
+      DIVCLK_DIVIDE => 4,
       IS_CLKINSEL_INVERTED => '0',
       IS_PWRDWN_INVERTED => '0',
       IS_RST_INVERTED => '0',
@@ -121,15 +120,7 @@ plle2_adv_inst: unisim.vcomponents.PLLE2_ADV
       DWE => '0',
       LOCKED => locked,
       PWRDWN => '0',
-      RST => reset_high
-    );
-plle2_adv_inst_i_1: unisim.vcomponents.LUT1
-    generic map(
-      INIT => X"1"
-    )
-        port map (
-      I0 => resetn,
-      O => reset_high
+      RST => reset
     );
 end STRUCTURE;
 library IEEE;
@@ -139,7 +130,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity clock_gen is
   port (
     clk_25mhz : out STD_LOGIC;
-    resetn : in STD_LOGIC;
+    reset : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_100mhz : in STD_LOGIC
   );
@@ -154,6 +145,6 @@ inst: entity work.clock_gen_clk_wiz
       clk_100mhz => clk_100mhz,
       clk_25mhz => clk_25mhz,
       locked => locked,
-      resetn => resetn
+      reset => reset
     );
 end STRUCTURE;

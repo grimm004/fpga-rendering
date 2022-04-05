@@ -1,10 +1,10 @@
 // Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2021.1 (win64) Build 3247384 Thu Jun 10 19:36:33 MDT 2021
-// Date        : Tue Mar 15 01:46:51 2022
+// Tool Version: Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
+// Date        : Sat Apr  2 00:31:11 2022
 // Host        : MAX-DESKTOP running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               f:/Users/Max/Desktop/project/fpga_rendering/fpga_rendering.gen/sources_1/ip/clock_gen/clock_gen_sim_netlist.v
+//               f:/Users/Max/Desktop/fpga_rendering/fpga_rendering.gen/sources_1/ip/clock_gen/clock_gen_sim_netlist.v
 // Design      : clock_gen
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -15,33 +15,33 @@
 (* NotValidForBitStream *)
 module clock_gen
    (clk_25mhz,
-    resetn,
+    reset,
     locked,
     clk_100mhz);
   output clk_25mhz;
-  input resetn;
+  input reset;
   output locked;
   input clk_100mhz;
 
   (* IBUF_LOW_PWR *) wire clk_100mhz;
   wire clk_25mhz;
   wire locked;
-  wire resetn;
+  wire reset;
 
   clock_gen_clk_wiz inst
        (.clk_100mhz(clk_100mhz),
         .clk_25mhz(clk_25mhz),
         .locked(locked),
-        .resetn(resetn));
+        .reset(reset));
 endmodule
 
 module clock_gen_clk_wiz
    (clk_25mhz,
-    resetn,
+    reset,
     locked,
     clk_100mhz);
   output clk_25mhz;
-  input resetn;
+  input reset;
   output locked;
   input clk_100mhz;
 
@@ -52,8 +52,7 @@ module clock_gen_clk_wiz
   wire clkfbout_buf_clock_gen;
   wire clkfbout_clock_gen;
   wire locked;
-  wire reset_high;
-  wire resetn;
+  wire reset;
   wire NLW_plle2_adv_inst_CLKOUT1_UNCONNECTED;
   wire NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED;
   wire NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED;
@@ -82,11 +81,11 @@ module clock_gen_clk_wiz
   (* BOX_TYPE = "PRIMITIVE" *) 
   PLLE2_ADV #(
     .BANDWIDTH("OPTIMIZED"),
-    .CLKFBOUT_MULT(31),
+    .CLKFBOUT_MULT(33),
     .CLKFBOUT_PHASE(0.000000),
     .CLKIN1_PERIOD(10.000000),
     .CLKIN2_PERIOD(0.000000),
-    .CLKOUT0_DIVIDE(41),
+    .CLKOUT0_DIVIDE(33),
     .CLKOUT0_DUTY_CYCLE(0.500000),
     .CLKOUT0_PHASE(0.000000),
     .CLKOUT1_DIVIDE(1),
@@ -104,8 +103,8 @@ module clock_gen_clk_wiz
     .CLKOUT5_DIVIDE(1),
     .CLKOUT5_DUTY_CYCLE(0.500000),
     .CLKOUT5_PHASE(0.000000),
-    .COMPENSATION("ZHOLD"),
-    .DIVCLK_DIVIDE(3),
+    .COMPENSATION("BUF_IN"),
+    .DIVCLK_DIVIDE(4),
     .IS_CLKINSEL_INVERTED(1'b0),
     .IS_PWRDWN_INVERTED(1'b0),
     .IS_RST_INVERTED(1'b0),
@@ -133,12 +132,7 @@ module clock_gen_clk_wiz
         .DWE(1'b0),
         .LOCKED(locked),
         .PWRDWN(1'b0),
-        .RST(reset_high));
-  LUT1 #(
-    .INIT(2'h1)) 
-    plle2_adv_inst_i_1
-       (.I0(resetn),
-        .O(reset_high));
+        .RST(reset));
 endmodule
 `ifndef GLBL
 `define GLBL
