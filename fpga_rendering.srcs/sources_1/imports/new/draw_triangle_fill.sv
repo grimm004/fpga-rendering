@@ -5,26 +5,42 @@
 `default_nettype none
 `timescale 1ns / 1ps
 
-module draw_triangle_fill #(parameter CORDW=16) (  // signed coordinate width
+import Utils::coli;
+import Utils::vert;
+
+module draw_triangle_fill #(
+    parameter CORDW=16,
+    parameter CHANW=4
+    ) (  // signed coordinate width
     input  wire logic clk,             // clock
     input  wire logic rst,             // reset
     input  wire logic start,           // start triangle drawing
     input  wire logic oe,              // output enable
-    input  wire logic signed [CORDW-1:0] x0, y0,  // vertex 0
-    input  wire logic signed [CORDW-1:0] x1, y1,  // vertex 1
-    input  wire logic signed [CORDW-1:0] x2, y2,  // vertex 2
+    vert v0,
+    vert v1,
+    vert v2,
     output      logic signed [CORDW-1:0] x,  y,   // drawing position
+    output      wire coli col,  // Drawing colour
     output      logic drawing,         // actively drawing
     output      logic busy,            // drawing request in progress
     output      logic done             // drawing is complete (high for one tick)
     );
 
+    // Take colour of first vertex
+    assign col = v0s.col;
+
+//    logic signed [CORDW-1:0] dc_dx_r, dc_dy_r;
+//    logic signed [CORDW-1:0] dc_dx_g, dc_dy_g;
+//    logic signed [CORDW-1:0] dc_dx_b, dc_dy_b;
+
     // sorted input vertices
-    logic signed [CORDW-1:0] x0s, y0s, x1s, y1s, x2s, y2s;
+    vert v0s, v1s, v2s;
 
     // line coordinates
-    logic signed [CORDW-1:0] x0a, y0a, x1a, y1a, xa, ya;
-    logic signed [CORDW-1:0] x0b, y0b, x1b, y1b, xb, yb;
+    vert v0a, v1a;
+    logic signed [CORDW-1:0] xa, ya;
+    vert v0b, v1b;
+    logic signed [CORDW-1:0] xb, yb;
     logic signed [CORDW-1:0] x0h, x1h, xh;
 
     // previous y-value for edges
@@ -44,71 +60,56 @@ module draw_triangle_fill #(parameter CORDW=16) (  // signed coordinate width
     logic busy_p1, done_p1;
 
     // draw state machine
-    enum {IDLE, SORT_0, SORT_1, SORT_2, INIT_A, INIT_B0, INIT_B1, INIT_H,
+    enum {IDLE, SORT_0, SORT_1, SORT_2, INIT_A, INIT_B0, INIT_B1,
             START_A, START_B, START_H, EDGE, H_LINE, DONE} state;
     always_ff @(posedge clk) begin
         case (state)
             SORT_0: begin
                 state <= SORT_1;
-                if (y0 > y2) begin
-                    x0s <= x2;
-                    y0s <= y2;
-                    x2s <= x0;
-                    y2s <= y0;
+                if (v0.y > v2.y) begin
+                    v0s <= v2;
+                    v2s <= v0;
                 end else begin
-                    x0s <= x0;
-                    y0s <= y0;
-                    x2s <= x2;
-                    y2s <= y2;
+                    v0s <= v0;
+                    v2s <= v2;
                 end
             end
             SORT_1: begin
                 state <= SORT_2;
-                if (y0s > y1) begin
-                    x0s <= x1;
-                    y0s <= y1;
-                    x1s <= x0s;
-                    y1s <= y0s;
+                if (v0s.y > v1.y) begin
+                    v0s <= v1;
+                    v1s <= v0s;
                 end else begin
-                    x1s <= x1;
-                    y1s <= y1;
+                    v1s <= v1;
                 end
             end
             SORT_2: begin
                 state <= INIT_A;
-                if (y1s > y2s) begin
-                    x1s <= x2s;
-                    y1s <= y2s;
-                    x2s <= x1s;
-                    y2s <= y1s;
+                if (v1s.y > v2s.y) begin
+                    v1s <= v2s;
+                    v2s <= v1s;
                 end
             end
             INIT_A: begin
                 state <= INIT_B0;
-                x0a <= x0s;
-                y0a <= y0s;
-                x1a <= x2s;
-                y1a <= y2s;
-                prev_xa <= x0s;
-                prev_xb <= x0s;
+                v0a <= v0s;
+                v1a <= v2s;
+                prev_xa <= v0s.x;
+                prev_xb <= v0s.x;
             end
             INIT_B0: begin
                 state <= START_A;
                 b_edge <= 0;
-                x0b <= x0s;
-                y0b <= y0s;
-                x1b <= x1s;
-                y1b <= y1s;
-                prev_y <= y0s;
+                v0b <= v0s;
+                v1b <= v1s;
+                prev_y <= v0s.y;
             end
             INIT_B1: begin
                 state <= START_B;  // we don't need to start A again
                 b_edge <= 1;
-                x0b <= x1s;
-                y0b <= y1s;
-                x1b <= x2s;
-                y1b <= y2s;
-                prev_y <= y1s;
+                v0b <= v1s;
+                v1b <= v2s;
+                prev_y <= v1s.y;
             end
             START_A: state <= START_B;
             START_B: state <= EDGE;
@@ -172,10 +173,10 @@ module draw_triangle_fill #(parameter CORDW=16) (  // signed coordinate width
         .rst,
         .start(state == START_A),
         .oe(oe_a),
-        .x0(x0a),
-        .y0(y0a),
-        .x1(x1a),
-        .y1(y1a),
+        .x0(v0a.x),
+        .y0(v0a.y),
+        .x1(v1a.x),
+        .y1(v1a.y),
         .x(xa),
         .y(ya),
         /* verilator lint_off PINCONNECTEMPTY */
@@ -190,10 +191,10 @@ module draw_triangle_fill #(parameter CORDW=16) (  // signed coordinate width
         .rst,
         .start(state == START_B),
         .oe(oe_b),
-        .x0(x0b),
-        .y0(y0b),
-        .x1(x1b),
-        .y1(y1b),
+        .x0(v0b.x),
+        .y0(v0b.y),
+        .x1(v1b.x),
+        .y1(v1b.y),
         .x(xb),
         .y(yb),
         /* verilator lint_off PINCONNECTEMPTY */
@@ -217,4 +218,31 @@ module draw_triangle_fill #(parameter CORDW=16) (  // signed coordinate width
         .done()
         /* verilator lint_on PINCONNECTEMPTY */
     );
+
+//    interp_gradient #(.CORDW(CORDW)) grad_r (
+//        .clk,
+//        .v0({v0s.x, v0s.y, v0s.col.r}),
+//        .v1({v1s.x, v1s.y, v1s.col.r}),
+//        .v2({v2s.x, v2s.y, v2s.col.r}),
+//        .dc_dx(dc_dx_r),
+//        .dc_dy(dc_dy_r)
+//    );
+
+//    interp_gradient #(.CORDW(CORDW)) grad_g (
+//        .clk,
+//        .v0({v0s.x, v0s.y, v0s.col.g}),
+//        .v1({v1s.x, v1s.y, v1s.col.g}),
+//        .v2({v2s.x, v2s.y, v2s.col.g}),
+//        .dc_dx(dc_dx_g),
+//        .dc_dy(dc_dy_g)
+//    );
+
+//    interp_gradient #(.CORDW(CORDW)) grad_b (
+//        .clk,
+//        .v0({v0s.x, v0s.y, v0s.col.b}),
+//        .v1({v1s.x, v1s.y, v1s.col.b}),
+//        .v2({v2s.x, v2s.y, v2s.col.b}),
+//        .dc_dx(dc_dx_b),
+//        .dc_dy(dc_dy_b)
+//    );
 endmodule
