@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
-| Date         : Tue Apr 12 20:09:32 2022
+| Date         : Tue Apr 12 22:01:09 2022
 | Host         : MAX-DESKTOP running 64-bit major release  (build 9200)
 | Command      : report_utilization -file top_renderer_utilization_synth.rpt -pb top_renderer_utilization_synth.pb
 | Design       : top_renderer
@@ -31,13 +31,13 @@ Table of Contents
 +----------------------------+------+-------+------------+-----------+-------+
 |          Site Type         | Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs*                | 1048 |     0 |          0 |     63400 |  1.65 |
-|   LUT as Logic             | 1042 |     0 |          0 |     63400 |  1.64 |
+| Slice LUTs*                | 1066 |     0 |          0 |     63400 |  1.68 |
+|   LUT as Logic             | 1060 |     0 |          0 |     63400 |  1.67 |
 |   LUT as Memory            |    6 |     0 |          0 |     19000 |  0.03 |
 |     LUT as Distributed RAM |    0 |     0 |            |           |       |
 |     LUT as Shift Register  |    6 |     0 |            |           |       |
-| Slice Registers            |  934 |     0 |          0 |    126800 |  0.74 |
-|   Register as Flip Flop    |  934 |     0 |          0 |    126800 |  0.74 |
+| Slice Registers            | 1968 |     0 |          0 |    126800 |  1.55 |
+|   Register as Flip Flop    | 1968 |     0 |          0 |    126800 |  1.55 |
 |   Register as Latch        |    0 |     0 |          0 |    126800 |  0.00 |
 | F7 Muxes                   |    0 |     0 |          0 |     31700 |  0.00 |
 | F8 Muxes                   |    0 |     0 |          0 |     15850 |  0.00 |
@@ -60,7 +60,7 @@ Table of Contents
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 44    |          Yes |         Set |            - |
-| 890   |          Yes |       Reset |            - |
+| 1924  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -152,12 +152,12 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     |  890 |        Flop & Latch |
-| LUT2     |  366 |                 LUT |
-| LUT4     |  338 |                 LUT |
-| LUT3     |  269 |                 LUT |
-| LUT6     |  246 |                 LUT |
-| LUT5     |  171 |                 LUT |
+| FDRE     | 1924 |        Flop & Latch |
+| LUT2     |  364 |                 LUT |
+| LUT4     |  348 |                 LUT |
+| LUT3     |  273 |                 LUT |
+| LUT6     |  245 |                 LUT |
+| LUT5     |  180 |                 LUT |
 | CARRY4   |  163 |          CarryLogic |
 | FDSE     |   44 |        Flop & Latch |
 | RAMB36E1 |   21 |        Block Memory |
@@ -177,7 +177,7 @@ Table of Contents
 +-----------+------+
 |  Ref Name | Used |
 +-----------+------+
-| multadd   |   48 |
+| multadd   |   64 |
 | clock_gen |    1 |
 +-----------+------+
 

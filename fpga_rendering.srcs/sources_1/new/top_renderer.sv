@@ -69,13 +69,16 @@ module top_renderer (
     localparam FB_IMAGE   = "";
     localparam FB_PALETTE = "colour.mem";
     localparam FB_CLEARCOL = 12'h000;
+    
+    logic busy;
 
-//    mat4f identity = '{
-//        SW[1] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, SW[2] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
-//    };
+    // Transform
+    mat4f identity = '{
+        SW[1] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000,                                                 SW[2] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000,                                                 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
+    };
 
     // Screen space transform
     mat4f ssm = '{
@@ -85,17 +88,59 @@ module top_renderer (
         32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
     };
 
-    vec4f vsst0, vsst1, vsst2;
+    // Start matrix multiplication flag
+    logic tr_start;
+    // Matrix multiplicaiton busy and done flags
+    logic tr_busy, tr_done;
 
-    // Transform busy
+    // Transformed matrix
+    mat4f tr_matrix;
+
+    matmult4f tr (
+        .clk(clk_100m),
+        .start(tr_start),
+        .a(ssm),
+        .b(identity),
+        .o(tr_matrix),
+        .busy(tr_busy),
+        .done(tr_done)
+    );
+
+    logic tr_matrix_changed;
+    initial tr_matrix_changed <= 1;
+
+    enum {TR_IDLE, TR_MULTIPLYING} tr_state;
+    always_ff @(posedge clk_100m) begin
+        case (tr_state)
+            TR_IDLE: begin
+                if (frame_sys && SW[3])
+                    tr_matrix_changed <= 1;
+
+                if (tr_matrix_changed) begin
+                    tr_start <= 1;
+                    tr_state <= TR_MULTIPLYING;
+                end
+            end
+            TR_MULTIPLYING: begin
+                tr_start <= 0;
+                if (tr_done) begin
+                    tr_matrix_changed <= 0;
+                    tr_state <= TR_IDLE;
+                end
+            end
+        endcase
+    end
+
+    // Start vertex transform flag
+    logic sst_start;
+    // Vertex transform busy flags
     logic sst0busy, sst1busy, sst2busy;
     logic sst_busy = sst0busy || sst1busy || sst2busy;
-    // Transform done
+    // Vertex transform done flags
     logic sst0done, sst1done, sst2done;
     logic sst0done_r, sst1done_r, sst2done_r;
-    // Start transform
-    logic sst_start;
 
+    // Current vertices to be rendered
     vec4f v0, v1, v2;
 
     initial begin
@@ -107,10 +152,12 @@ module top_renderer (
         v2.w <= 32'b0000000000000001_0000000000000000;
     end
 
+    vec4f vsst0, vsst1, vsst2;
+
     vecmult4f sst0 (
         .clk(clk_100m),
         .start(sst_start),
-        .a(ssm),
+        .a(tr_matrix),
         .b(v0),
         .o(vsst0),
         .busy(sst0busy),
@@ -120,7 +167,7 @@ module top_renderer (
     vecmult4f sst1 (
         .clk(clk_100m),
         .start(sst_start),
-        .a(ssm),
+        .a(tr_matrix),
         .b(v1),
         .o(vsst1),
         .busy(sst1busy),
@@ -130,7 +177,7 @@ module top_renderer (
     vecmult4f sst2 (
         .clk(clk_100m),
         .start(sst_start),
-        .a(ssm),
+        .a(tr_matrix),
         .b(v2),
         .o(vsst2),
         .busy(sst2busy),
@@ -211,15 +258,9 @@ module top_renderer (
                 state <= TRANSFORM;
                 case (shape_id)
                     2'd0: begin
-                        if (SW[2]) begin
-                            v0.x <= 32'b0000000000000000_0000000000000000; v0.y <= 32'b0000000000000000_1000000000000000;
-                            v1.x <= 32'b1111111111111111_1000000000000000; v1.y <= 32'b1111111111111111_1000000000000000;
-                            v2.x <= 32'b0000000000000000_1000000000000000; v2.y <= 32'b1111111111111111_1000000000000000;
-                        end else begin
-                            v0.x <= 32'b0000000000111100_0000000000000000; v0.y <= 32'b0000000000010100_0000000000000000;
-                            v1.x <= 32'b0000000100011000_0000000000000000; v1.y <= 32'b0000000001010000_0000000000000000;
-                            v2.x <= 32'b0000000010100000_0000000000000000; v2.y <= 32'b0000000010100100_0000000000000000;
-                        end
+                        v0.x <= 32'b0000000000000000_0000000000000000; v0.y <= 32'b0000000000000000_1000000000000000;
+                        v1.x <= 32'b1111111111111111_1000000000000000; v1.y <= 32'b1111111111111111_1000000000000000;
+                        v2.x <= 32'b0000000000000000_1000000000000000; v2.y <= 32'b1111111111111111_1000000000000000;
 
                         vc0 <= 12'hFFF;
                         vc1 <= 12'hFFF;
@@ -293,18 +334,18 @@ module top_renderer (
         endcase
     end
 
-    // control drawing speed with output enable
-    localparam FRAME_WAIT = 300;  // wait this many frames to start drawing
-    logic [$clog2(FRAME_WAIT)-1:0] cnt_frame_wait;
-    logic draw_req;  // draw requested
-    always_ff @(posedge clk_100m) begin
-        if (!fb_busy) draw_req <= 0;  // disable after FB available, so 1 pix per frame
-        if (frame_sys) begin  // once per frame
-            if (cnt_frame_wait != FRAME_WAIT-1) begin
-                cnt_frame_wait <= cnt_frame_wait + 1;
-            end else draw_req <= 1;  // request drawing
-        end
-    end
+//    // control drawing speed with output enable
+//    localparam FRAME_WAIT = 300;  // wait this many frames to start drawing
+//    logic [$clog2(FRAME_WAIT)-1:0] cnt_frame_wait;
+//    logic draw_req;  // draw requested
+//    always_ff @(posedge clk_100m) begin
+//        if (!fb_busy) draw_req <= 0;  // disable after FB available, so 1 pix per frame
+//        if (frame_sys) begin  // once per frame
+//            if (cnt_frame_wait != FRAME_WAIT-1) begin
+//                cnt_frame_wait <= cnt_frame_wait + 1;
+//            end else draw_req <= 1;  // request drawing
+//        end
+//    end
 
     draw_triangle_fill #(
         .CORDW(CORDW),
@@ -313,7 +354,8 @@ module top_renderer (
         .clk(clk_100m),
         .rst(1'b0),
         .start(draw_start),
-        .oe((SW[0] || draw_req) && !fb_busy && !sst_busy),  // draw if requested when framebuffer is available
+        .oe(!busy),  // draw if requested when framebuffer is available
+//        .oe((SW[0] || draw_req) && !busy),  // draw if requested when framebuffer is available
         .v0({vsst0.x[15:0], vsst0.y[15:0], vc0}),
         .v1({vsst1.x[15:0], vsst1.y[15:0], vc1}),
         .v2({vsst2.x[15:0], vsst2.y[15:0], vc2}),
@@ -329,6 +371,9 @@ module top_renderer (
 
     // write to framebuffer when drawing
     always_comb fb_we = drawing || fb_clearing;
+
+    // Either frame buffer, transform, or matrix multiplication is busy
+    always_comb busy = fb_busy || sst_busy || tr_busy;
 
     // reading from FB takes one cycle: delay display signals to match
     logic hsync_p1, vsync_p1;

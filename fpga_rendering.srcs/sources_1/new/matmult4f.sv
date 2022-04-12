@@ -14,7 +14,7 @@ module matmult4f (
     output     logic done
     );
 
-    logic ce, oe;
+    logic ce;
 
     valf mata [0:3][0:3];
     valf matb [0:3][0:3];
@@ -34,38 +34,78 @@ module matmult4f (
         matb[3][0], matb[3][1], matb[3][2], matb[3][3]
     } = b;
 
-    genvar i, j;
+    logic [2:0] j;
+    logic dot_start;
+    logic dot_done;
+    
+    valf vals [0:3];
+
+    genvar i;
     generate
         for (i = 0; i < 4; i = i + 1) begin
-            for (j = 0; j < 4; j = j + 1) begin
-                dot4f dot (
-                    .clk,
-                    .ce,
-                    .a({mata[i][0], mata[i][1], mata[i][2], mata[i][3]}),
-                    .b({matb[0][j], matb[1][j], matb[2][j], matb[3][j]}),
-                    .o(mato[i][j])
-                );
-            end
+            dot4f dot (
+                .clk,
+                .ce,
+                .a({mata[i][0], mata[i][1], mata[i][2], mata[i][3]}),
+                .b({matb[0][j], matb[1][j], matb[2][j], matb[3][j]}),
+                .o(vals[i])
+            );
         end
     endgenerate
 
+    enum {IDLE, CALCULATING, DONE} state;
     always_ff @(posedge clk) begin
-        if (oe)
-            o <= {
-                mato[0][0], mato[0][1], mato[0][2], mato[0][3],
-                mato[1][0], mato[1][1], mato[1][2], mato[1][3],
-                mato[2][0], mato[2][1], mato[2][2], mato[2][3],
-                mato[3][0], mato[3][1], mato[3][2], mato[3][3]
-            };
+        case (state)
+            IDLE: begin
+                busy <= 0;
+                done <= 0;
+                dot_start <= 0;
+                j <= 0;
+
+                if (start) begin
+                    state <= CALCULATING;
+                    dot_start <= 1;
+                    busy <= 1;
+                end
+            end
+            CALCULATING: begin
+                dot_start <= 0;
+
+                if (dot_done) begin
+                    for (int k = 0; k < 4; k = k + 1) begin
+                        mato[k][j] = vals[k];
+                    end
+
+                    if (j == 2'd3) begin
+                        state <= DONE;
+                    end else begin
+                        dot_start <= 1;
+                        j <= j + 1;
+                    end
+                end
+            end
+            DONE: begin
+                busy <= 0;
+                done <= 1;
+                j <= 0;
+                o <= {
+                    mato[0][0], mato[0][1], mato[0][2], mato[0][3],
+                    mato[1][0], mato[1][1], mato[1][2], mato[1][3],
+                    mato[2][0], mato[2][1], mato[2][2], mato[2][3],
+                    mato[3][0], mato[3][1], mato[3][2], mato[3][3]
+                };
+                state <= IDLE;
+            end
+        endcase
     end
 
     clock_counter #(.COUNT(17)) clk_cnt (
         .clk,
-        .start,
-        .busy,
-        .done,
+        .start(dot_start),
+        .busy(),
+        .done(dot_done),
         .ce,
-        .oe
+        .oe()
     );
 
 endmodule

@@ -37,6 +37,7 @@ module dot4f(
                 .SUBTRACT(subtract),
                 .CE(ce),
                 .SCLR(sclr),
+                .PCOUT(),
                 .P(vals[i])
             );
         end
