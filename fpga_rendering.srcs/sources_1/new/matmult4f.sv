@@ -34,6 +34,21 @@ module matmult4f (
         matb[3][0], matb[3][1], matb[3][2], matb[3][3]
     } = b;
 
+    genvar i, j;
+    generate
+        for (i = 0; i < 4; i = i + 1) begin
+            for (j = 0; j < 4; j = j + 1) begin
+                dot4f dot (
+                    .clk,
+                    .ce,
+                    .a({mata[i][0], mata[i][1], mata[i][2], mata[i][3]}),
+                    .b({matb[0][j], matb[1][j], matb[2][j], matb[3][j]}),
+                    .o(mato[i][j])
+                );
+            end
+        end
+    endgenerate
+
     always_ff @(posedge clk) begin
         if (oe)
             o <= {
