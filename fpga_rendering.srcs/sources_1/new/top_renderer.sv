@@ -5,9 +5,7 @@
 `default_nettype none
 `timescale 1ns / 1ps
 
-import Utils::mat4i;
 import Utils::mat4f;
-import Utils::vec4i;
 import Utils::vec4f;
 
 module top_renderer (
@@ -22,7 +20,7 @@ module top_renderer (
     output      logic [3:0] vga_b   // 4-bit VGA blue
     );
 
-    assign LED[3:0] = SW[3:0];
+    assign LED[2:0] = SW[2:0];
 
     // generate pixel clock
     logic clk_pix;
@@ -58,131 +56,145 @@ module top_renderer (
     xd xd_frame (.clk_i(clk_pix), .clk_o(clk_100m),
                  .rst_i(1'b0), .rst_o(1'b0), .i(frame), .o(frame_sys));
 
+    logic busy;
+
+    mat4f mat_rotation_3deg_y = {
+        32'b0000000000000000_1111111110100110, 32'b0000000000000000_0000000000000000, 32'b1111111111111111_1111001010011010, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000110101100101, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_1111111110100110, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
+    };
+
+    mat4f mat_perspective_proj = {
+        32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b1111111111111110_1111011110111101, 32'b1111111111111111_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b1111111111111111_0111101111011110, 32'b0000000000000000_0000000000000000
+    };
+
+    // Transform
+    mat4f mat_world;
+    mat4f mat_product;
+
+    mat4f mat_identity = '{
+        32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
+    };
+
+    logic rot_start;
+    logic rot_done;
+
+    matmult4f mm (
+        .clk(clk_100m),
+        .start(rot_start),
+        .a(mat_rotation_3deg_y),
+        .b(mat_world),
+        .o(mat_product),
+        .busy(),
+        .done(rot_done)
+    );
+
+    localparam ROTATE_FRAMES = 120;
+    logic [$clog2(ROTATE_FRAMES)-1:0] frame_counter;
+
+    enum {ROT_IDLE, ROT_PROCESSING, ROT_DONE} rot_state;
+    always @(posedge clk_100m) begin
+        case (rot_state)
+            ROT_IDLE: begin
+                if (frame) begin
+                    frame_counter <= frame_counter + 1;
+                    if (frame_counter == ROTATE_FRAMES) begin
+                        LED[3] <= ~LED[3];
+                        frame_counter <= 0;
+                        mat_world <= mat_identity;
+                    end
+                    rot_start <= 1;
+                    rot_state <= ROT_PROCESSING;
+                end
+            end
+            ROT_PROCESSING: begin
+                rot_start <= 0;
+
+                if (rot_done)
+                    rot_state <= ROT_DONE;
+            end
+            ROT_DONE: begin
+                mat_world <= mat_product;
+                rot_state <= ROT_IDLE;
+            end
+        endcase
+    end
+
+    // Start matrix transformation flag
+    logic mtr_start;
+    // Matrix transformation busy flag
+    logic mtr_busy;
+
+    // Transformed matrix
+    mat4f mat_tr;
+
+    transform_matrix mt (
+        .clk(clk_100m),
+        .start(mtr_start),
+        .mat_proj(mat_perspective_proj),
+        .mat_world,
+        .mat_tr,
+        .busy(mtr_busy),
+        .done()
+    );
+
+    always_ff @(posedge clk_100m) begin
+        if (mtr_start)
+            mtr_start <= 0;
+        if (frame && SW[0])
+            mtr_start <= 1;
+    end
+
+    // Start vertex transform flag
+    logic vtr_start;
+    // Vertex transform busy and done flags
+    logic vtr_busy, vtr_done;
+
+    // Current world-space vertices
+    vec4f v [0:2];
+    // Current screen-space vertices
+    vec4f v_ss [0:2];
+
+    transform_vertex vt (
+        .clk(clk_100m),
+        .start(vtr_start),
+        .matrix(mat_tr),
+        .v0(v[0]),
+        .v1(v[1]),
+        .v2(v[2]),
+        .v0_ss(v_ss[0]),
+        .v1_ss(v_ss[1]),
+        .v2_ss(v_ss[2]),
+        .busy(vtr_busy),
+        .done(vtr_done)
+    );
+
+    // Set z and w components for world-space vertices to -2 and 1
+    initial begin
+        v[0].z <= 32'b1111111111111110_0000000000000000;
+        v[0].w <= 32'b0000000000000001_0000000000000000;
+        v[1].z <= 32'b1111111111111110_0000000000000000;
+        v[1].w <= 32'b0000000000000001_0000000000000000;
+        v[2].z <= 32'b1111111111111110_0000000000000000;
+        v[2].w <= 32'b0000000000000001_0000000000000000;
+    end
+
     // framebuffer (FB)
     localparam FB_WIDTH   = 640;
     localparam FB_HEIGHT  = 480;
-    localparam HALFWIDTH  = FB_WIDTH / 2;
-    localparam HALFHEIGHT = FB_HEIGHT / 2;
     localparam FB_CIDXW   = 12;
     localparam FB_CHANW   = 4;
     localparam FB_SCALE   = 1;
     localparam FB_IMAGE   = "";
     localparam FB_PALETTE = "colour.mem";
     localparam FB_CLEARCOL = 12'h000;
-    
-    logic busy;
-
-    // Transform
-    mat4f identity = '{
-        SW[1] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000,                                                 SW[2] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000,                                                 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000,                                                 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
-    };
-
-    // Screen space transform
-    mat4f ssm = '{
-        32'b0000000101000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000101000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b1111111100010000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000011110000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
-    };
-
-    // Start matrix multiplication flag
-    logic tr_start;
-    // Matrix multiplicaiton busy and done flags
-    logic tr_busy, tr_done;
-
-    // Transformed matrix
-    mat4f tr_matrix;
-
-    matmult4f tr (
-        .clk(clk_100m),
-        .start(tr_start),
-        .a(ssm),
-        .b(identity),
-        .o(tr_matrix),
-        .busy(tr_busy),
-        .done(tr_done)
-    );
-
-    logic tr_matrix_changed;
-    initial tr_matrix_changed <= 1;
-
-    enum {TR_IDLE, TR_MULTIPLYING} tr_state;
-    always_ff @(posedge clk_100m) begin
-        case (tr_state)
-            TR_IDLE: begin
-                if (frame_sys && SW[3])
-                    tr_matrix_changed <= 1;
-
-                if (tr_matrix_changed) begin
-                    tr_start <= 1;
-                    tr_state <= TR_MULTIPLYING;
-                end
-            end
-            TR_MULTIPLYING: begin
-                tr_start <= 0;
-                if (tr_done) begin
-                    tr_matrix_changed <= 0;
-                    tr_state <= TR_IDLE;
-                end
-            end
-        endcase
-    end
-
-    // Start vertex transform flag
-    logic sst_start;
-    // Vertex transform busy flags
-    logic sst0busy, sst1busy, sst2busy;
-    logic sst_busy = sst0busy || sst1busy || sst2busy;
-    // Vertex transform done flags
-    logic sst0done, sst1done, sst2done;
-    logic sst0done_r, sst1done_r, sst2done_r;
-
-    // Current vertices to be rendered
-    vec4f v0, v1, v2;
-
-    initial begin
-        v0.z <= 32'b0000000000000001_0000000000000000;
-        v0.w <= 32'b0000000000000001_0000000000000000;
-        v1.z <= 32'b0000000000000001_0000000000000000;
-        v1.w <= 32'b0000000000000001_0000000000000000;
-        v2.z <= 32'b0000000000000001_0000000000000000;
-        v2.w <= 32'b0000000000000001_0000000000000000;
-    end
-
-    vec4f vsst0, vsst1, vsst2;
-
-    vecmult4f sst0 (
-        .clk(clk_100m),
-        .start(sst_start),
-        .a(tr_matrix),
-        .b(v0),
-        .o(vsst0),
-        .busy(sst0busy),
-        .done(sst0done)
-    );
-
-    vecmult4f sst1 (
-        .clk(clk_100m),
-        .start(sst_start),
-        .a(tr_matrix),
-        .b(v1),
-        .o(vsst1),
-        .busy(sst1busy),
-        .done(sst1done)
-    );
-
-    vecmult4f sst2 (
-        .clk(clk_100m),
-        .start(sst_start),
-        .a(tr_matrix),
-        .b(v2),
-        .o(vsst2),
-        .busy(sst2busy),
-        .done(sst2done)
-    );
 
     logic fb_we;  // write enable
     logic signed [CORDW-1:0] fbx, fby;  // draw coordinates
@@ -224,8 +236,7 @@ module top_renderer (
     // draw triangles in framebuffer
     localparam SHAPE_CNT=1;  // number of shapes to draw
     logic [1:0] shape_id;    // shape identifier
-//    vec2f vx0, vy0, vx1, vy1, vx2, vy2;  // shape coords
-    logic [FB_CIDXW-1:0] vc0, vc1, vc2;
+    logic [FB_CIDXW-1:0] vc [0:2]; // Vertex colours
     logic draw_start, drawing, draw_done;  // drawing signals
 
     // draw state machine
@@ -251,66 +262,34 @@ module top_renderer (
                 end
             end
             INIT: begin  // register coordinates and colour
-                sst_start <= 1;
-                sst0done_r <= 0;
-                sst1done_r <= 0;
-                sst2done_r <= 0;
+                vtr_start <= 1;
                 state <= TRANSFORM;
+
                 case (shape_id)
                     2'd0: begin
-                        v0.x <= 32'b0000000000000000_0000000000000000; v0.y <= 32'b0000000000000000_1000000000000000;
-                        v1.x <= 32'b1111111111111111_1000000000000000; v1.y <= 32'b1111111111111111_1000000000000000;
-                        v2.x <= 32'b0000000000000000_1000000000000000; v2.y <= 32'b1111111111111111_1000000000000000;
+                        v[0].x <= 32'b0000000000000000_0000000000000000; v[0].y <= 32'b0000000000000000_1000000000000000;
+                        v[1].x <= 32'b1111111111111111_1000000000000000; v[1].y <= 32'b1111111111111111_1000000000000000;
+                        v[2].x <= 32'b0000000000000000_1000000000000000; v[2].y <= 32'b1111111111111111_1000000000000000;
 
-                        vc0 <= 12'hFFF;
-                        vc1 <= 12'hFFF;
-                        vc2 <= 12'hFFF;
+                        vc[0] <= 12'hFFF;
+                        vc[1] <= 12'hFFF;
+                        vc[2] <= 12'hFFF;
                     end
-//                    2'd0: begin
-//                        vx0 <=  60; vy0 <=  20; vc0 <= 12'hFA0;
-//                        vx1 <= 280; vy1 <=  80; vc1 <= 12'h000;
-//                        vx2 <= 160; vy2 <= 164; vc2 <= 12'hFFF;
-//                    end
-//                    2'd1: begin
-//                        vx0 <=  70; vy0 <= 160; vc0 <= 12'h3BF;
-//                        vx1 <= 220; vy1 <=  90; vc1 <= 12'hF00;
-//                        vx2 <= 170; vy2 <=  10; vc2 <= 12'h3BF;
-//                    end
-//                    2'd2: begin
-//                        vx0 <=  22; vy0 <=  35; vc0 <= 12'h825;
-//                        vx1 <=  62; vy1 <= 150; vc1 <= 12'h825;
-//                        vx2 <=  98; vy2 <=  96; vc2 <= 12'h825;
-//                    end
-//                    2'd3: begin
-//                        vx0 <=    0; vy0 <=   0; vc0 <= 12'hF00;
-//                        vx1 <=    0; vy1 <= 100; vc1 <= 12'h0F0;
-//                        vx2 <=  100; vy2 <=   0; vc2 <= 12'h00F;
-//                    end
                     default: begin  // should never occur
-                        v0.x <= 32'b0000000000000000_0000000000000000; v0.y <= 32'b0000000000000000_0000000000000000;
-                        v1.x <= 32'b0000000000000001_0000000000000000; v1.y <= 32'b0000000000000000_0000000000000000;
-                        v2.x <= 32'b0000000000000000_0000000000000000; v2.y <= 32'b0000000000000001_0000000000000000;
+                        v[0].x <= 32'b0000000000000000_0000000000000000; v[0].y <= 32'b0000000000000000_0000000000000000;
+                        v[1].x <= 32'b0000000000000001_0000000000000000; v[1].y <= 32'b0000000000000000_0000000000000000;
+                        v[2].x <= 32'b0000000000000000_0000000000000000; v[2].y <= 32'b0000000000000001_0000000000000000;
 
-                        vc0 <= 12'hCCC;
-                        vc1 <= 12'hCCC;
-                        vc2 <= 12'hCCC;
+                        vc[0] <= 12'hCCC;
+                        vc[1] <= 12'hCCC;
+                        vc[2] <= 12'hCCC;
                     end
                 endcase
             end
             TRANSFORM: begin
-                sst_start <= 0;
-                
-                if (sst0done)
-                    sst0done_r <= 1;
-                if (sst1done)
-                    sst1done_r <= 1;
-                if (sst2done)
-                    sst2done_r <= 1;
-                    
-                if (sst0done_r & sst1done_r & sst2done_r) begin
-                    sst0done_r <= 0;
-                    sst1done_r <= 0;
-                    sst2done_r <= 0;
+                vtr_start <= 0;
+
+                if (vtr_done) begin
                     draw_start <= 1;
                     state <= DRAW;
                 end
@@ -334,19 +313,6 @@ module top_renderer (
         endcase
     end
 
-//    // control drawing speed with output enable
-//    localparam FRAME_WAIT = 300;  // wait this many frames to start drawing
-//    logic [$clog2(FRAME_WAIT)-1:0] cnt_frame_wait;
-//    logic draw_req;  // draw requested
-//    always_ff @(posedge clk_100m) begin
-//        if (!fb_busy) draw_req <= 0;  // disable after FB available, so 1 pix per frame
-//        if (frame_sys) begin  // once per frame
-//            if (cnt_frame_wait != FRAME_WAIT-1) begin
-//                cnt_frame_wait <= cnt_frame_wait + 1;
-//            end else draw_req <= 1;  // request drawing
-//        end
-//    end
-
     draw_triangle_fill #(
         .CORDW(CORDW),
         .CHANW(FB_CHANW)
@@ -354,11 +320,10 @@ module top_renderer (
         .clk(clk_100m),
         .rst(1'b0),
         .start(draw_start),
-        .oe(!busy),  // draw if requested when framebuffer is available
-//        .oe((SW[0] || draw_req) && !busy),  // draw if requested when framebuffer is available
-        .v0({vsst0.x[15:0], vsst0.y[15:0], vc0}),
-        .v1({vsst1.x[15:0], vsst1.y[15:0], vc1}),
-        .v2({vsst2.x[15:0], vsst2.y[15:0], vc2}),
+        .oe(!busy),
+        .v0({v_ss[0].x[15:0], v_ss[0].y[15:0], vc[0]}),
+        .v1({v_ss[1].x[15:0], v_ss[1].y[15:0], vc[1]}),
+        .v2({v_ss[2].x[15:0], v_ss[2].y[15:0], vc[2]}),
         .x(fbx),
         .y(fby),
         .drawing,
@@ -372,8 +337,8 @@ module top_renderer (
     // write to framebuffer when drawing
     always_comb fb_we = drawing || fb_clearing;
 
-    // Either frame buffer, transform, or matrix multiplication is busy
-    always_comb busy = fb_busy || sst_busy || tr_busy;
+    // Either frame buffer, matrix transform, or vertex transform is busy
+    always_comb busy = fb_busy || mtr_busy || vtr_busy;
 
     // reading from FB takes one cycle: delay display signals to match
     logic hsync_p1, vsync_p1;

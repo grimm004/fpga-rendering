@@ -15,8 +15,6 @@ module vecmult4f (
     output     logic done
     );
 
-    logic ce, oe;
-
     valf mata [0:3][0:3];
     valf vecb [0:3];
     valf veco [0:3];
@@ -30,31 +28,49 @@ module vecmult4f (
 
     assign {vecb[0], vecb[1], vecb[2], vecb[3]} = b;
 
+    logic dot_start;
+    logic [0:3] dot_done;
+
     genvar i;
     generate
         for (i = 0; i < 4; i = i + 1) begin
             dot4f dot (
                 .clk,
-                .ce,
+                .start(dot_start),
                 .a({mata[i][0], mata[i][1], mata[i][2], mata[i][3]}),
                 .b,
-                .o(veco[i])
+                .o(veco[i]),
+                .busy(),
+                .done(dot_done[i])
             );
         end
     endgenerate
 
+    enum {IDLE, COMPUTING, DONE} state;
     always_ff @(posedge clk) begin
-        if (oe)
-            o <= {veco[0], veco[1], veco[2], veco[3]};
-    end
+        case (state)
+            IDLE: begin
+                busy <= 0;
+                done <= 0;
 
-    clock_counter #(.COUNT(17)) clk_cnt (
-        .clk,
-        .start,
-        .busy,
-        .done,
-        .ce,
-        .oe
-    );
+                if (start) begin
+                    busy <= 1;
+                    dot_start <= 1;
+                    state <= COMPUTING;
+                end
+            end
+            COMPUTING: begin
+                dot_start <= 0;
+
+                if (dot_done == '1)
+                    state <= DONE;
+            end
+            DONE: begin
+                o <= {veco[0], veco[1], veco[2], veco[3]};
+                done <= 1;
+                state <= IDLE;
+            end
+        endcase
+    end
 
 endmodule

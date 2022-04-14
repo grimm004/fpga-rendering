@@ -14,8 +14,6 @@ module matmult4f (
     output     logic done
     );
 
-    logic ce;
-
     valf mata [0:3][0:3];
     valf matb [0:3][0:3];
     valf mato [0:3][0:3];
@@ -36,7 +34,7 @@ module matmult4f (
 
     logic [2:0] j;
     logic dot_start;
-    logic dot_done;
+    logic [0:3] dot_done;
     
     valf vals [0:3];
 
@@ -45,10 +43,12 @@ module matmult4f (
         for (i = 0; i < 4; i = i + 1) begin
             dot4f dot (
                 .clk,
-                .ce,
+                .start(dot_start),
                 .a({mata[i][0], mata[i][1], mata[i][2], mata[i][3]}),
                 .b({matb[0][j], matb[1][j], matb[2][j], matb[3][j]}),
-                .o(vals[i])
+                .o(vals[i]),
+                .done(dot_done[i]),
+                .busy()
             );
         end
     endgenerate
@@ -71,7 +71,7 @@ module matmult4f (
             CALCULATING: begin
                 dot_start <= 0;
 
-                if (dot_done) begin
+                if (dot_done == '1) begin
                     for (int k = 0; k < 4; k = k + 1) begin
                         mato[k][j] = vals[k];
                     end
@@ -98,14 +98,5 @@ module matmult4f (
             end
         endcase
     end
-
-    clock_counter #(.COUNT(17)) clk_cnt (
-        .clk,
-        .start(dot_start),
-        .busy(),
-        .done(dot_done),
-        .ce,
-        .oe()
-    );
 
 endmodule

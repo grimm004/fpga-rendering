@@ -13,14 +13,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="595.218 ns"></ZoomEndTime>
-      <Cursor1Time time="44.614 ns"></Cursor1Time>
+      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <Cursor1Time time="196.007 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="372"></NameColumnWidth>
-      <ValueColumnWidth column_width="205"></ValueColumnWidth>
+      <ValueColumnWidth column_width="197"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="13" />
+   <WVObjectSize size="15" />
    <wvobject fp_name="/dot4f_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -77,25 +77,36 @@
       <obj_property name="radix_fractionWidth">16</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
-   <wvobject fp_name="/dot4f_tb/uut/vals" type="array">
-      <obj_property name="ElementShortName">vals[-1:3][31:-32]</obj_property>
-      <obj_property name="ObjectShortName">vals[-1:3][31:-32]</obj_property>
+   <wvobject fp_name="/dot4f_tb/uut/acc" type="array">
+      <obj_property name="ElementShortName">acc[31:-32]</obj_property>
+      <obj_property name="ObjectShortName">acc[31:-32]</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">32</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
-   <wvobject fp_name="/dot4f_tb/timer/ce" type="logic">
+   <wvobject fp_name="/dot4f_tb/uut/i" type="array">
+      <obj_property name="ElementShortName">i[3:0]</obj_property>
+      <obj_property name="ObjectShortName">i[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/dot4f_tb/uut/ce" type="logic">
       <obj_property name="ElementShortName">ce</obj_property>
       <obj_property name="ObjectShortName">ce</obj_property>
    </wvobject>
-   <wvobject fp_name="/dot4f_tb/timer/clk_counter" type="array">
-      <obj_property name="ElementShortName">clk_counter[4:0]</obj_property>
-      <obj_property name="ObjectShortName">clk_counter[4:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   <wvobject fp_name="/dot4f_tb/uut/ma_start" type="logic">
+      <obj_property name="ElementShortName">ma_start</obj_property>
+      <obj_property name="ObjectShortName">ma_start</obj_property>
    </wvobject>
-   <wvobject fp_name="/dot4f_tb/timer/state" type="array">
-      <obj_property name="ElementShortName">state[31:0]</obj_property>
-      <obj_property name="ObjectShortName">state[31:0]</obj_property>
+   <wvobject fp_name="/dot4f_tb/uut/ma_done" type="logic">
+      <obj_property name="ElementShortName">ma_done</obj_property>
+      <obj_property name="ObjectShortName">ma_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/dot4f_tb/uut/ma_p" type="array">
+      <obj_property name="ElementShortName">ma_p[31:-32]</obj_property>
+      <obj_property name="ObjectShortName">ma_p[31:-32]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">32</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
 </wave_config>

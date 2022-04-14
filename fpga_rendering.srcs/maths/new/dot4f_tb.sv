@@ -7,7 +7,7 @@ import Utils::valf;
 module dot4f_tb();
 
     logic clk, start;
-    logic busy, done, ce;
+    logic busy, done, start;
 
     vec4f vec0;
     vec4f vec1;
@@ -15,18 +15,12 @@ module dot4f_tb();
 
     dot4f uut (
         .clk,
-        .ce,
+        .start,
         .a(vec0),
         .b(vec1),
-        .o
-    );
-
-    clock_counter #(.COUNT(17)) clk_cnt (
-        .clk,
-        .start,
+        .o,
         .busy,
-        .done,
-        .ce
+        .done
     );
 
     initial begin
@@ -61,7 +55,7 @@ module dot4f_tb();
 
         start = 1'b0;
 
-        #250
+        #1500
 
         vec0 = {
             32'b0000000000000011_0000000000000000,
