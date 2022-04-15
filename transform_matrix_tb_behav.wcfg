@@ -12,30 +12,38 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="2,053.124 ns"></ZoomStartTime>
-      <ZoomEndTime time="3,178.641 ns"></ZoomEndTime>
-      <Cursor1Time time="2,428.847 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="8.000001 us"></ZoomEndTime>
+      <Cursor1Time time="0.474031 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="208"></NameColumnWidth>
-      <ValueColumnWidth column_width="100"></ValueColumnWidth>
+      <ValueColumnWidth column_width="96"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="10" />
+   <WVObjectSize size="12" />
    <wvobject fp_name="/transform_matrix_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/transform_matrix_tb/mat_world" type="array">
-      <obj_property name="ElementShortName">mat_world</obj_property>
-      <obj_property name="ObjectShortName">mat_world</obj_property>
+   <wvobject fp_name="/transform_matrix_tb/mat_rotation" type="array">
+      <obj_property name="ElementShortName">mat_rotation</obj_property>
+      <obj_property name="ObjectShortName">mat_rotation</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">16</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
-   <wvobject fp_name="/transform_matrix_tb/mat_proj" type="array">
-      <obj_property name="ElementShortName">mat_proj</obj_property>
-      <obj_property name="ObjectShortName">mat_proj</obj_property>
+   <wvobject fp_name="/transform_matrix_tb/mat_translation" type="array">
+      <obj_property name="ElementShortName">mat_translation</obj_property>
+      <obj_property name="ObjectShortName">mat_translation</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">16</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/transform_matrix_tb/mat_perspective_proj" type="array">
+      <obj_property name="ElementShortName">mat_perspective_proj</obj_property>
+      <obj_property name="ObjectShortName">mat_perspective_proj</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">16</obj_property>
@@ -61,20 +69,29 @@
       <obj_property name="ElementShortName">mtr_done</obj_property>
       <obj_property name="ObjectShortName">mtr_done</obj_property>
    </wvobject>
-   <wvobject fp_name="/transform_matrix_tb/vt/tr_state" type="array">
-      <obj_property name="ElementShortName">tr_state[31:0]</obj_property>
-      <obj_property name="ObjectShortName">tr_state[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/transform_matrix_tb/vt/i" type="array">
+   <wvobject fp_name="/transform_matrix_tb/mt/i" type="array">
       <obj_property name="ElementShortName">i[1:0]</obj_property>
       <obj_property name="ObjectShortName">i[1:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/transform_matrix_tb/vt/mat_acc" type="array">
+   <wvobject fp_name="/transform_matrix_tb/mt/mat_product" type="array">
+      <obj_property name="ElementShortName">mat_product</obj_property>
+      <obj_property name="ObjectShortName">mat_product</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">16</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/transform_matrix_tb/mt/mat_acc" type="array">
       <obj_property name="ElementShortName">mat_acc</obj_property>
       <obj_property name="ObjectShortName">mat_acc</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">16</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/transform_matrix_tb/mt/tr_state" type="array">
+      <obj_property name="ElementShortName">tr_state[31:0]</obj_property>
+      <obj_property name="ObjectShortName">tr_state[31:0]</obj_property>
    </wvobject>
 </wave_config>

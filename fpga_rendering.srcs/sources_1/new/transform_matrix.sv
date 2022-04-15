@@ -7,16 +7,18 @@ import Utils::vec4f;
 module transform_matrix (
     input  wire logic clk,
     input  wire logic start,
+    input  wire mat4f mat_rotation,
+    input  wire mat4f mat_scale,
+    input  wire mat4f mat_translation,
     input  wire mat4f mat_proj,
-    input  wire mat4f mat_world,
     output      mat4f mat_tr,
     output      logic busy,
     output      logic done
     );
 
-    localparam N = 3;
+    localparam N = 5;
 
-    mat4f identity = {
+    mat4f mat_identity = {
         32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
         32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
         32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
@@ -34,15 +36,13 @@ module transform_matrix (
     mat4f mats [0:N-1];
     mat4f mat_acc;
 
-    assign mats[0] = mat_world;
-    assign mats[1] = mat_proj;
-    assign mats[2] = mat_screen_space;
+    assign mats[0] = mat_rotation;
+    assign mats[1] = mat_scale;
+    assign mats[2] = mat_translation;
+    assign mats[3] = mat_proj;
+    assign mats[4] = mat_screen_space;
 
-    // mat_tr = mat_screen_space * mat_proj * mat_world * identity
-    // mat_acc = identity
-    // 0: mat_acc = mat_world * mat_acc = mat_world * identity
-    // 1: mat_acc = mat_proj * mat_acc = mat_proj * mat_world * identity
-    // 2: mat_acc = mat_screen_space * mat_acc = mat_screen_space * mat_proj * mat_world * identity
+    // mat_tr = mat_screen_space * mat_proj * mat_translation * mat_scale * mat_rotation * mat_identity
 
     logic [$clog2(N)-1:0] i;
 
@@ -70,7 +70,7 @@ module transform_matrix (
                 done <= 0;
                 busy <= 0;
                 i    <= 0;
-                mat_acc <= identity;
+                mat_acc <= mat_identity;
 
                 if (start) begin
                     tr_start <= 1;
