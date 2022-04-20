@@ -6,40 +6,53 @@
 `timescale 1ns / 1ps
 
 import Utils::coli;
-import Utils::vert;
+import Utils::valf;
+import Utils::vec2i;
+import Utils::vert2i;
 
 module draw_triangle_fill #(
-    parameter CORDW=16,
-    parameter CHANW=4
-    ) (  // signed coordinate width
-    input  wire logic clk,             // clock
-    input  wire logic rst,             // reset
-    input  wire logic start,           // start triangle drawing
-    input  wire logic oe,              // output enable
-    vert v0,
-    vert v1,
-    vert v2,
-    output      logic signed [CORDW-1:0] x,  y,   // drawing position
-    output      wire coli col,  // Drawing colour
-    output      logic drawing,         // actively drawing
-    output      logic busy,            // drawing request in progress
-    output      logic done             // drawing is complete (high for one tick)
+    parameter CORDW=16  // signed coordinate width
+    ) (
+    input  wire logic  clk,            // clock
+    input  wire logic  rst,            // reset
+    input  wire logic  start,          // start triangle drawing
+    input  wire logic  oe,             // output enable
+    input  wire vert2i v0, v1, v2,     // Triangle vertices
+    output      vec2i  draw_pos,       // drawing position
+    output      wire   coli col,       // Drawing colour
+    output      logic  drawing,        // actively drawing
+    output      logic  busy,           // drawing request in progress
+    output      logic  done            // drawing is complete (high for one tick)
     );
 
-    // Take colour of first vertex
-    assign col = v0s.col;
+//    valf colour [0:2];
 
-//    logic signed [CORDW-1:0] dc_dx_r, dc_dy_r;
-//    logic signed [CORDW-1:0] dc_dx_g, dc_dy_g;
-//    logic signed [CORDW-1:0] dc_dx_b, dc_dy_b;
+//    // Take colour of first vertex
+//    assign colour[0] = v0.col.r;
+//    assign colour[1] = v0.col.g;
+//    assign colour[2] = v0.col.b;
+
+    assign col = v0.col;
 
     // sorted input vertices
-    vert v0s, v1s, v2s;
+    vert2i v0s, v1s, v2s;
+
+//    iterp_gradient ig (
+//        .clk,
+//        .start(ig_start),
+//        .v0(v0s),
+//        .v1(v1s),
+//        .v2(v2s),
+//        .dz_dx(dz_dx),
+//        .dz_dy(dz_dy),
+//        .busy(ig_busy),
+//        .done(ig_done)
+//    );
 
     // line coordinates
-    vert v0a, v1a;
+    vert2i v0a, v1a;
     logic signed [CORDW-1:0] xa, ya;
-    vert v0b, v1b;
+    vert2i v0b, v1b;
     logic signed [CORDW-1:0] xb, yb;
     logic signed [CORDW-1:0] x0h, x1h, xh;
 
@@ -60,8 +73,16 @@ module draw_triangle_fill #(
     logic busy_p1, done_p1;
 
     // draw state machine
-    enum {IDLE, SORT_0, SORT_1, SORT_2, INIT_A, INIT_B0, INIT_B1,
-            START_A, START_B, START_H, EDGE, H_LINE, DONE} state;
+    enum {
+        IDLE,
+        SORT_0, SORT_1, SORT_2,
+        INIT_A,
+        INIT_B0, INIT_B1,
+        START_A, START_B, START_H,
+        EDGE,
+        H_LINE,
+        DONE
+    } state;
     always_ff @(posedge clk) begin
         case (state)
             SORT_0: begin
@@ -90,6 +111,7 @@ module draw_triangle_fill #(
                     v2s <= v1s;
                 end
             end
+            // Now v0s.y <= v1s.y <= v2s.y
             INIT_A: begin
                 state <= INIT_B0;
                 v0a <= v0s;
@@ -161,8 +183,8 @@ module draw_triangle_fill #(
 
     // register output
     always_ff @(posedge clk) begin
-        x <= xh;
-        y <= prev_y;
+        draw_pos.x <= xh;
+        draw_pos.y <= prev_y;
         drawing <= drawing_h;
         busy <= busy_p1;
         done <= done_p1;
@@ -218,31 +240,4 @@ module draw_triangle_fill #(
         .done()
         /* verilator lint_on PINCONNECTEMPTY */
     );
-
-//    interp_gradient #(.CORDW(CORDW)) grad_r (
-//        .clk,
-//        .v0({v0s.x, v0s.y, v0s.col.r}),
-//        .v1({v1s.x, v1s.y, v1s.col.r}),
-//        .v2({v2s.x, v2s.y, v2s.col.r}),
-//        .dc_dx(dc_dx_r),
-//        .dc_dy(dc_dy_r)
-//    );
-
-//    interp_gradient #(.CORDW(CORDW)) grad_g (
-//        .clk,
-//        .v0({v0s.x, v0s.y, v0s.col.g}),
-//        .v1({v1s.x, v1s.y, v1s.col.g}),
-//        .v2({v2s.x, v2s.y, v2s.col.g}),
-//        .dc_dx(dc_dx_g),
-//        .dc_dy(dc_dy_g)
-//    );
-
-//    interp_gradient #(.CORDW(CORDW)) grad_b (
-//        .clk,
-//        .v0({v0s.x, v0s.y, v0s.col.b}),
-//        .v1({v1s.x, v1s.y, v1s.col.b}),
-//        .v2({v2s.x, v2s.y, v2s.col.b}),
-//        .dc_dx(dc_dx_b),
-//        .dc_dy(dc_dy_b)
-//    );
 endmodule

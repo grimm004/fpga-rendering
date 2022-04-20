@@ -12,10 +12,10 @@ module clock_counter #(
     output     logic oe
     );
 
-    localparam COUNTER_WIDTH = $clog2(COUNT);
+    localparam COUNTER_WIDTH = $clog2(COUNT) + 1;
 
     logic [COUNTER_WIDTH-1:0] clk_counter;
-    enum {IDLE, CALCULATING, DONE} state;
+    enum {IDLE, CALCULATING} state;
     always_ff @(posedge clk) begin
         case (state)
             IDLE: begin
@@ -33,16 +33,11 @@ module clock_counter #(
             end
             CALCULATING: begin
                 if (clk_counter == COUNT) begin
-                    state <= DONE;
+                    done  <= 1;
+                    state <= IDLE;
                     oe    <= 1;
                 end else
                     clk_counter <= clk_counter + 1;
-            end
-            DONE: begin
-                done <= 1;
-                busy <= 0;
-                oe   <= 0;
-                state <= IDLE;
             end
         endcase
     end

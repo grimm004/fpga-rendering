@@ -135,7 +135,7 @@ BEGIN
       C_A_TYPE => 0,
       C_B_TYPE => 0,
       C_C_TYPE => 0,
-      C_CE_OVERRIDES_SCLR => 0,
+      C_CE_OVERRIDES_SCLR => 1,
       C_AB_LATENCY => -1,
       C_C_LATENCY => -1,
       C_OUT_HIGH => 63,

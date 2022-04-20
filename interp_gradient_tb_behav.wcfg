@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="interp_gradient_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="Utils" />
+            <top_module name="glbl" />
+            <top_module name="interp_gradient_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <Cursor1Time time="252.480 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="185"></NameColumnWidth>
+      <ValueColumnWidth column_width="377"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="2" />
+   <wvobject fp_name="group76" type="group">
+      <obj_property name="label">tb</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/interp_gradient_tb/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/v0" type="array">
+         <obj_property name="ElementShortName">v0</obj_property>
+         <obj_property name="ObjectShortName">v0</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/v1" type="array">
+         <obj_property name="ElementShortName">v1</obj_property>
+         <obj_property name="ObjectShortName">v1</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/v2" type="array">
+         <obj_property name="ElementShortName">v2</obj_property>
+         <obj_property name="ObjectShortName">v2</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/dc_dx" type="array">
+         <obj_property name="ElementShortName">dc_dx[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_dx[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/dc_dy" type="array">
+         <obj_property name="ElementShortName">dc_dy[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_dy[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group57" type="group">
+      <obj_property name="label">uut</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/interp_gradient_tb/uut/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/v0" type="array">
+         <obj_property name="ElementShortName">v0</obj_property>
+         <obj_property name="ObjectShortName">v0</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/v1" type="array">
+         <obj_property name="ElementShortName">v1</obj_property>
+         <obj_property name="ObjectShortName">v1</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/v2" type="array">
+         <obj_property name="ElementShortName">v2</obj_property>
+         <obj_property name="ObjectShortName">v2</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dc_dx" type="array">
+         <obj_property name="ElementShortName">dc_dx[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_dx[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dc_dy" type="array">
+         <obj_property name="ElementShortName">dc_dy[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_dy[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dc_x" type="array">
+         <obj_property name="ElementShortName">dc_x[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_x[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dc_y" type="array">
+         <obj_property name="ElementShortName">dc_y[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_y[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dx" type="array">
+         <obj_property name="ElementShortName">dx[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dx[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dy" type="array">
+         <obj_property name="ElementShortName">dy[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dy[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dc_dx_r" type="array">
+         <obj_property name="ElementShortName">dc_dx_r[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_dx_r[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/dc_dy_r" type="array">
+         <obj_property name="ElementShortName">dc_dy_r[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">dc_dy_r[15:-16]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">16</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/div_start" type="logic">
+         <obj_property name="ElementShortName">div_start</obj_property>
+         <obj_property name="ObjectShortName">div_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/div_done" type="array">
+         <obj_property name="ElementShortName">div_done[1:0]</obj_property>
+         <obj_property name="ObjectShortName">div_done[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/interp_gradient_tb/uut/state" type="array">
+         <obj_property name="ElementShortName">state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

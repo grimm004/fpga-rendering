@@ -20,7 +20,7 @@ module transform_vertex_tb;
     // Current screen-space vertices
     vec4f v_tr [0:2];
 
-    transform_vertex vt (
+    transform_vertex uut (
         .clk,
         .start(vtr_start),
         .matrix(tr_matrix),

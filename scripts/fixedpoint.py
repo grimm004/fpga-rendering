@@ -4,6 +4,24 @@ INT_W   = 16
 FIXED_W = 16
 
 
+def graidients(v0, v1, v2):
+    temp = (v0[0] - v2[0]) * (v1[1] - v2[1]) - 0
+    temp = (v1[0] - v2[0]) * (v0[1] - v2[1]) - temp
+    dx = temp
+
+    print("dx", dx)
+    
+    one_over_dx = 1.0 / dx;
+    one_over_dy = -one_over_dx
+
+    print("reciprocals", one_over_dx, one_over_dy)
+
+    x_step = (((v1[2] - v2[2]) * (v0[1] - v2[1])) - ((v0[2] - v2[2]) * (v1[1] - v2[1]))) * one_over_dx;
+    y_step = (((v1[2] - v2[2]) * (v0[0] - v2[0])) - ((v0[2] - v2[2]) * (v1[0] - v2[0]))) * one_over_dy;
+
+    return x_step, y_step
+
+
 def fixed_str_to_dec(s):
     return fixed_to_dec([int(bc) for bc in s.replace("_", "")])
 
@@ -99,6 +117,17 @@ def perspective_divide(a):
 if __name__ == "__main__":
     import sys
 
+    vs = [
+        [320.0, 160.0, 0xF],
+        [240.0, 320.0, 0x0],
+        [400.0, 320.0, 0x0]
+    ]
+
+    dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
+    print("Gradients:", dz_dx, dz_dy)
+
+    # sys.exit()
+
     print(fixed_str_to_dec("0000000000000001_0000000000000000"))
     print(fixed_str_to_dec("1111111111111101_1110111101111011"))
     print(fixed_str_to_dec("1111111100010000_0000000000000000"))
@@ -121,11 +150,12 @@ if __name__ == "__main__":
 
     translation = translation_matrix(0.0, 0.0, 3.0)
     
-    rot = rotation_matrix_y(2.0 * math.pi / (60.0 * 2.0))
+    rot = rotation_matrix_y(315 * math.pi / 60.0)
+    print(rot)
 
     rot_mat = identity
-    for _ in range(30):
-        rot_mat = matmult(rot, rot_mat)
+    #for _ in range(30):
+    #    rot_mat = matmult(rot, rot_mat)
 
     mat = matmult(screen_space, matmult(proj, matmult(translation, rot_mat)))
 
@@ -141,7 +171,7 @@ if __name__ == "__main__":
         v_transformed = vecmult(mat, v)
         print(v, "->", [float(f"{p:.2f}") for p in v_transformed], "->", [float(f"{p:.2f}") for p in perspective_divide(v_transformed)])
 
-    values = [60, 20, 280, 80, 160, 164, 0, 0.5, -0.5, -2]
+    values = [320.0, 160.0, 240.0, 320.0, 400.0, 320.0, -180, 180]
     for value in values:
         print(f"{value}:\nvalf value = {to_fixed_literal(value)};")
 

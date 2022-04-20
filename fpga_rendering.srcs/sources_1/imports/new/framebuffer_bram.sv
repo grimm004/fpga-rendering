@@ -8,14 +8,13 @@
 // NB. Signals are in clk_sys domain unless indicated
 
 module framebuffer_bram #(
-    parameter CORDW=16,      // signed coordinate width (bits)
-    parameter WIDTH=320,     // width of framebuffer in pixels
-    parameter HEIGHT=180,    // height of framebuffer in pixels
-    parameter CIDXW=4,       // colour index data width: 4=16, 8=256 colours
-    parameter CHANW=4,       // width of RGB colour channels (4 or 8 bit)
-    parameter SCALE=4,       // display output scaling factor (>=1)
-    parameter F_IMAGE="",    // image file to load into framebuffer
-    parameter F_PALETTE=""   // palette file to load into CLUT
+    parameter CORDW=16,       // signed coordinate width (bits)
+    parameter WIDTH=320,      // width of framebuffer in pixels
+    parameter HEIGHT=180,     // height of framebuffer in pixels
+    parameter CHANW=4,        // width of RGB colour channels (4 or 8 bit)
+    parameter COLW=3*CHANW,   // colour index data width: 4=16, 8=256 colours
+    parameter SCALE=4,        // display output scaling factor (>=1)
+    parameter F_IMAGE=""      // image file to load into framebuffer
     ) (
     input  wire logic clk_sys,    // system clock
     input  wire logic clk_pix,    // pixel clock
@@ -27,7 +26,7 @@ module framebuffer_bram #(
     input  wire logic we,         // write enable
     input  wire logic signed [CORDW-1:0] x,  // horizontal pixel coordinate
     input  wire logic signed [CORDW-1:0] y,  // vertical pixel coordinate
-    input  wire logic [CIDXW-1:0] cidx,   // framebuffer colour index
+    input  wire logic [COLW-1:0] col,     // framebuffer colour
     output      logic busy,               // busy with reading for display output
     output      logic clip,               // pixel coordinate outside buffer
     output      logic [CHANW-1:0] red,    // colour output to display (clk_pix)
@@ -43,11 +42,11 @@ module framebuffer_bram #(
     localparam FB_PIXELS = WIDTH * HEIGHT;
     localparam FB_ADDRW  = $clog2(FB_PIXELS);
     localparam FB_DEPTH  = FB_PIXELS;
-    localparam FB_DATAW  = CIDXW;
+    localparam FB_DATAW  = COLW;
     localparam FB_DUALPORT = 1;  // separate read and write ports?
 
     logic [FB_ADDRW-1:0] fb_addr_read, fb_addr_write;
-    logic [FB_DATAW-1:0] fb_cidx_read, fb_cidx_read_p1;
+    logic [FB_DATAW-1:0] fb_col_read, fb_col_read_p1;
 
     // write address components
     logic signed [CORDW-1:0] x_add;     // pixel position on line
@@ -64,15 +63,15 @@ module framebuffer_bram #(
 
     // draw colour and write enable (delay to match address calculation)
     logic fb_we, we_in_p1;
-    logic [FB_DATAW-1:0] fb_cidx_write, cidx_in_p1;
+    logic [FB_DATAW-1:0] fb_col_write, col_in_p1;
     always_ff @(posedge clk_sys) begin
         // first stage
         we_in_p1 <= we;
-        cidx_in_p1 <= cidx;  // draw colour
+        col_in_p1 <= col;  // draw colour
         clip <= (y < 0 || y >= HEIGHT || x < 0 || x >= WIDTH);  // clipped?
         // second stage
         fb_we <= (busy || clip) ? 0 : we_in_p1;  // write if neither busy nor clipped
-        fb_cidx_write <= cidx_in_p1;
+        fb_col_write <= col_in_p1;
     end
 
     // framebuffer memory (BRAM)
@@ -86,8 +85,8 @@ module framebuffer_bram #(
         .we(fb_we),
         .addr_write(fb_addr_write),
         .addr_read(fb_addr_read),
-        .data_in(fb_cidx_write),
-        .data_out(fb_cidx_read)
+        .data_in(fb_col_write),
+        .data_out(fb_col_read)
     );
 
     // linebuffer (LB)
@@ -161,22 +160,10 @@ module framebuffer_bram #(
     );
 
     // improve timing with register between BRAM and async ROM
-    always_ff @(posedge clk_sys) fb_cidx_read_p1 <= fb_cidx_read;
-
-    // colour lookup table (ROM)
-    localparam CLUTW = 3 * CHANW;
-    logic [CLUTW-1:0] clut_colr;
-    rom_async #(
-        .WIDTH(CLUTW),
-        .DEPTH(2**CIDXW),
-        .INIT_F(F_PALETTE)
-    ) clut (
-        .addr(fb_cidx_read_p1),
-        .data(clut_colr)
-    );
+    always_ff @(posedge clk_sys) fb_col_read_p1 <= fb_col_read;
 
     // map colour index to palette using CLUT and read into LB
-    always_ff @(posedge clk_sys) {lb_in_2, lb_in_1, lb_in_0} <= clut_colr;
+    always_ff @(posedge clk_sys) {lb_in_2, lb_in_1, lb_in_0} <= fb_col_read_p1;
 
     logic lb_en_out_p1;  // LB enable out: reading from LB BRAM takes one cycle
     always_ff @(posedge clk_pix) lb_en_out_p1 <= lb_en_out;

@@ -7,6 +7,8 @@
 
 import Utils::mat4f;
 import Utils::vec4f;
+import Utils::valf;
+import Utils::vec2i;
 
 module top_renderer (
     input  wire logic clk_100m,     // 100 MHz clock
@@ -87,67 +89,83 @@ module top_renderer (
         32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000
     };
 
-//    mat4f mat_mat = {
-//        32'b0000000011110000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000101000000_0000000000000000, 32'b0000001111000000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, 32'b1111111100010000_0000000000000000, 32'b0000000011110000_0000000000000000, 32'b0000001011010000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0001000010000100, 32'b0000000000000001_0010000100001000, 
-//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000011_0000000000000000
-//    };
-
     // Transform
+    valf  theta;
     mat4f mat_rotation;
-    mat4f mat_product;
 
-    mat4f mat_identity = '{
-        32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
-    };
+    logic rot_start, rot_busy;
 
-    logic rot_start;
-    logic rot_done;
-
-    matmult4f mm (
+    rotation_matrix rot_mat_inst (
         .clk(clk_100m),
         .start(rot_start),
-        .a(mat_rotation_3deg_y),
-        .b(mat_rotation),
-        .o(mat_product),
-        .busy(),
-        .done(rot_done)
+        .theta,
+        .mat_rotation,
+        .busy(rot_busy),
+        .done()
     );
 
-    localparam ROTATE_FRAMES = 120;
-    logic [$clog2(ROTATE_FRAMES)-1:0] frame_counter;
-
-    enum {ROT_IDLE, ROT_PROCESSING, ROT_DONE} rot_state;
-    always_ff @(posedge clk_100m) begin
-        case (rot_state)
-            ROT_IDLE: begin
-                if (frame && SW[1]) begin
-                    frame_counter <= frame_counter + 1;
-                    if (frame_counter == ROTATE_FRAMES) begin
-                        LED[1] <= ~LED[1];
-                        frame_counter <= 0;
-                        mat_rotation <= mat_identity;
-                    end
-                    rot_start <= 1;
-                    rot_state <= ROT_PROCESSING;
-                end
-            end
-            ROT_PROCESSING: begin
-                rot_start <= 0;
-
-                if (rot_done)
-                    rot_state <= ROT_DONE;
-            end
-            ROT_DONE: begin
-                mat_rotation <= mat_product;
-                rot_state <= ROT_IDLE;
-            end
-        endcase
+    always @(posedge clk_100m) begin
+        if (SW[1] && frame && !rot_busy) begin
+            theta <= theta + 32'b0000000000000001_0000000000000000;  // +1.0 degree per frame
+            if (theta == 32'b0000000101101000_0000000000000000)      //  360.0
+                theta <= 32'b0000000000000000_0000000000000000;      //  0.0
+            rot_start <= 1;
+        end else
+            rot_start <= 0;
     end
+
+//    mat4f mat_product;
+
+//    mat4f mat_identity = '{
+//        32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+//        32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
+//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
+//    };
+
+//    logic rot_start;
+//    logic rot_done;
+
+//    matmult4f mm (
+//        .clk(clk_100m),
+//        .start(rot_start),
+//        .a(mat_rotation_3deg_y),
+//        .b(mat_rotation),
+//        .o(mat_product),
+//        .busy(),
+//        .done(rot_done)
+//    );
+
+//    localparam ROTATE_FRAMES = 120;
+//    logic [$clog2(ROTATE_FRAMES)-1:0] frame_counter;
+
+//    enum {ROT_IDLE, ROT_PROCESSING, ROT_DONE} rot_state;
+//    always_ff @(posedge clk_100m) begin
+//        case (rot_state)
+//            ROT_IDLE: begin
+//                if (frame && SW[1]) begin
+//                    frame_counter <= frame_counter + 1;
+//                    if (frame_counter == ROTATE_FRAMES) begin
+//                        LED[1] <= ~LED[1];
+//                        frame_counter <= 0;
+//                        mat_rotation <= mat_identity;
+//                    end
+//                    rot_start <= 1;
+//                    rot_state <= ROT_PROCESSING;
+//                end
+//            end
+//            ROT_PROCESSING: begin
+//                rot_start <= 0;
+
+//                if (rot_done)
+//                    rot_state <= ROT_DONE;
+//            end
+//            ROT_DONE: begin
+//                mat_rotation <= mat_product;
+//                rot_state <= ROT_IDLE;
+//            end
+//        endcase
+//    end
 
     // Start matrix transformation flag
     logic mtr_start;
@@ -213,16 +231,15 @@ module top_renderer (
     // framebuffer (FB)
     localparam FB_WIDTH   = 640;
     localparam FB_HEIGHT  = 480;
-    localparam FB_CIDXW   = 12;
     localparam FB_CHANW   = 4;
+    localparam FB_COLW    = 3 * FB_CHANW;
     localparam FB_SCALE   = 1;
     localparam FB_IMAGE   = "";
-    localparam FB_PALETTE = "colour.mem";
     localparam FB_CLEARCOL = 12'h000;
 
     logic fb_we;  // write enable
-    logic signed [CORDW-1:0] fbx, fby;  // draw coordinates
-    logic [FB_CIDXW-1:0] fb_cidx;  // draw colour index
+    vec2i draw_pos;  // draw coordinates
+    logic [FB_COLW-1:0] fb_col;  // draw colour
     logic fb_busy;  // when framebuffer is busy it cannot accept writes
     logic [FB_CHANW-1:0] fb_red, fb_green, fb_blue;  // colours for display output
     logic fb_clearing;
@@ -231,11 +248,10 @@ module top_renderer (
     framebuffer_bram #(
         .WIDTH(FB_WIDTH),
         .HEIGHT(FB_HEIGHT),
-        .CIDXW(FB_CIDXW),
         .CHANW(FB_CHANW),
+        .COLW(FB_COLW),
         .SCALE(FB_SCALE),
-        .F_IMAGE(FB_IMAGE),
-        .F_PALETTE(FB_PALETTE)
+        .F_IMAGE(FB_IMAGE)
     ) fb_inst (
         .clk_sys(clk_100m),
         .clk_pix,
@@ -245,9 +261,9 @@ module top_renderer (
         .frame,
         .line,
         .we(fb_we),
-        .x(fb_clearing ? fb_clearx : fbx),
-        .y(fb_clearing ? fb_cleary : fby),
-        .cidx(fb_clearing ? FB_CLEARCOL : fb_cidx),
+        .x(fb_clearing ? fb_clearx : draw_pos.x),
+        .y(fb_clearing ? fb_cleary : draw_pos.y),
+        .col(fb_clearing ? FB_CLEARCOL : fb_col),
         /* verilator lint_off PINCONNECTEMPTY */
         .clip(),
         /* verilator lint_on PINCONNECTEMPTY */
@@ -260,7 +276,7 @@ module top_renderer (
     // draw triangles in framebuffer
     localparam SHAPE_CNT=1;  // number of shapes to draw
     logic [1:0] shape_id;    // shape identifier
-    logic [FB_CIDXW-1:0] vc [0:2]; // Vertex colours
+    logic [FB_COLW-1:0] vc [0:2]; // Vertex colours
     logic draw_start, drawing, draw_done;  // drawing signals
 
     // draw state machine
@@ -338,8 +354,7 @@ module top_renderer (
     end
 
     draw_triangle_fill #(
-        .CORDW(CORDW),
-        .CHANW(FB_CHANW)
+        .CORDW(CORDW)
     ) draw_triangle_inst (
         .clk(clk_100m),
         .rst(1'b0),
@@ -348,12 +363,11 @@ module top_renderer (
         .v0({v_tr[0].x[15:0], v_tr[0].y[15:0], vc[0]}),
         .v1({v_tr[1].x[15:0], v_tr[1].y[15:0], vc[1]}),
         .v2({v_tr[2].x[15:0], v_tr[2].y[15:0], vc[2]}),
-        .x(fbx),
-        .y(fby),
+        .draw_pos,
         .drawing,
         /* verilator lint_off PINCONNECTEMPTY */
         .busy(),
-        .col(fb_cidx),
+        .col(fb_col),
         /* verilator lint_on PINCONNECTEMPTY */
         .done(draw_done)
     );
