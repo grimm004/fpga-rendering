@@ -13,12 +13,12 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="689.480 ns"></ZoomEndTime>
-      <Cursor1Time time="409.611 ns"></Cursor1Time>
+      <ZoomEndTime time="794.588 ns"></ZoomEndTime>
+      <Cursor1Time time="77.688 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="208"></NameColumnWidth>
-      <ValueColumnWidth column_width="76"></ValueColumnWidth>
+      <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="2" />
    <wvobject fp_name="group104" type="group">
@@ -127,13 +127,13 @@
          <obj_property name="radix_otherWidth">0</obj_property>
       </wvobject>
       <wvobject fp_name="/rotation_matrix_tb/uut/sin_id" type="array">
-         <obj_property name="ElementShortName">sin_id[7:0]</obj_property>
-         <obj_property name="ObjectShortName">sin_id[7:0]</obj_property>
+         <obj_property name="ElementShortName">sin_id[9:0]</obj_property>
+         <obj_property name="ObjectShortName">sin_id[9:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/rotation_matrix_tb/uut/sin_data" type="array">
-         <obj_property name="ElementShortName">sin_data[15:0]</obj_property>
-         <obj_property name="ObjectShortName">sin_data[15:0]</obj_property>
+         <obj_property name="ElementShortName">sin_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">sin_data[31:0]</obj_property>
          <obj_property name="Radix">REALRADIX</obj_property>
          <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
          <obj_property name="radix_fractionWidth">8</obj_property>

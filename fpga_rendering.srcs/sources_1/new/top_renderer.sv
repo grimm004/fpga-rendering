@@ -114,59 +114,6 @@ module top_renderer (
             rot_start <= 0;
     end
 
-//    mat4f mat_product;
-
-//    mat4f mat_identity = '{
-//        32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
-//        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
-//    };
-
-//    logic rot_start;
-//    logic rot_done;
-
-//    matmult4f mm (
-//        .clk(clk_100m),
-//        .start(rot_start),
-//        .a(mat_rotation_3deg_y),
-//        .b(mat_rotation),
-//        .o(mat_product),
-//        .busy(),
-//        .done(rot_done)
-//    );
-
-//    localparam ROTATE_FRAMES = 120;
-//    logic [$clog2(ROTATE_FRAMES)-1:0] frame_counter;
-
-//    enum {ROT_IDLE, ROT_PROCESSING, ROT_DONE} rot_state;
-//    always_ff @(posedge clk_100m) begin
-//        case (rot_state)
-//            ROT_IDLE: begin
-//                if (frame && SW[1]) begin
-//                    frame_counter <= frame_counter + 1;
-//                    if (frame_counter == ROTATE_FRAMES) begin
-//                        LED[1] <= ~LED[1];
-//                        frame_counter <= 0;
-//                        mat_rotation <= mat_identity;
-//                    end
-//                    rot_start <= 1;
-//                    rot_state <= ROT_PROCESSING;
-//                end
-//            end
-//            ROT_PROCESSING: begin
-//                rot_start <= 0;
-
-//                if (rot_done)
-//                    rot_state <= ROT_DONE;
-//            end
-//            ROT_DONE: begin
-//                mat_rotation <= mat_product;
-//                rot_state <= ROT_IDLE;
-//            end
-//        endcase
-//    end
-
     // Start matrix transformation flag
     logic mtr_start;
     // Matrix transformation busy flag
@@ -311,9 +258,9 @@ module top_renderer (
                         v[1].x <= 32'b1111111111111111_1000000000000000; v[1].y <= 32'b1111111111111111_1000000000000000;
                         v[2].x <= 32'b0000000000000000_1000000000000000; v[2].y <= 32'b1111111111111111_1000000000000000;
 
-                        vc[0] <= 12'hFFF;
-                        vc[1] <= 12'hFFF;
-                        vc[2] <= 12'hFFF;
+                        vc[0] <= 12'hF00;
+                        vc[1] <= 12'h0F0;
+                        vc[2] <= 12'h00F;
                     end
                     default: begin  // should never occur
                         v[0].x <= 32'b0000000000000000_0000000000000000; v[0].y <= 32'b0000000000000000_0000000000000000;

@@ -40,6 +40,11 @@ package Utils;
     } vert2i;
 
     typedef struct packed {
+        valf x, y;
+        colf col;
+    } vert2f;
+
+    typedef struct packed {
         valf x, y, z, w;
         colf col;
     } vert4f;
