@@ -45,6 +45,11 @@ package Utils;
     } vert2f;
 
     typedef struct packed {
+        valf x, y, z;
+        colf col;
+    } vert3f;
+
+    typedef struct packed {
         valf x, y, z, w;
         colf col;
     } vert4f;
@@ -56,4 +61,14 @@ package Utils;
             v31, v32, v33, v34,
             v41, v42, v43, v44;
     } mat4f;
+
+    typedef struct packed {
+        colf col_x;
+        colf col_y;
+    } gradients;
+
+    typedef struct packed {
+        colf col;
+    } interpolants;
+
 endpackage: Utils

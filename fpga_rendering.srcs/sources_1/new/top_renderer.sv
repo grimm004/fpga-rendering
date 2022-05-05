@@ -13,17 +13,20 @@ import Utils::vec2i;
 module top_renderer (
     input  wire logic clk_100m,     // 100 MHz clock
     input  wire logic btn_rst,      // reset button (active low)
-    input  wire logic [15:0] SW,
-    output      logic [15:0] LED,
+    input  wire logic [15:0] SW,    // Board switches
+    output      logic [15:0] LED,   // Board LEDs
     output      logic vga_hsync,    // horizontal sync
     output      logic vga_vsync,    // vertical sync
     output      logic [3:0] vga_r,  // 4-bit VGA red
     output      logic [3:0] vga_g,  // 4-bit VGA green
-    output      logic [3:0] vga_b   // 4-bit VGA blue
+    output      logic [3:0] vga_b,  // 4-bit VGA blue
+    output      logic [6:0] seg,    // Seven-seg display segments
+    output      logic       dp,     // Seven-seg display decimal point
+    output      logic [7:0] an      // Seven-seg display anodes
     );
 
     assign LED[0] = SW[0];
-    assign LED[3:2] = SW[3:2];
+    assign LED[7:2] = SW[7:2];
 
     // generate pixel clock
     logic clk_pix;
@@ -122,10 +125,20 @@ module top_renderer (
     // Transformed matrix
     mat4f mat_tr;
 
-    transform_matrix mt (
+    mat4f mat_identity = {
+        32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
+    };
+
+    transform_matrix #(
+        .WIDTH(FB_WIDTH),
+        .HEIGHT(FB_HEIGHT)
+    ) mt (
         .clk(clk_100m),
         .start(mtr_start),
-        .mat_rotation,
+        .mat_rotation(SW[7] ? mat_rotation : mat_identity),
         .mat_scale,
         .mat_translation,
         .mat_proj(mat_perspective_proj),
@@ -176,12 +189,11 @@ module top_renderer (
     end
 
     // framebuffer (FB)
+    localparam FB_SCALE   = 1;
     localparam FB_WIDTH   = 640;
     localparam FB_HEIGHT  = 480;
     localparam FB_CHANW   = 4;
     localparam FB_COLW    = 3 * FB_CHANW;
-    localparam FB_SCALE   = 1;
-    localparam FB_IMAGE   = "";
     localparam FB_CLEARCOL = 12'h000;
 
     logic fb_we;  // write enable
@@ -197,14 +209,13 @@ module top_renderer (
         .HEIGHT(FB_HEIGHT),
         .CHANW(FB_CHANW),
         .COLW(FB_COLW),
-        .SCALE(FB_SCALE),
-        .F_IMAGE(FB_IMAGE)
+        .SCALE(FB_SCALE)
     ) fb_inst (
         .clk_sys(clk_100m),
         .clk_pix,
         .rst_sys(1'b0),
         .rst_pix(1'b0),
-        .de(sy >= 0 && sy < 480 && sx >= 0 && sx <= 640),  // 16:9 letterbox
+        .de(sy >= 0 && sy < FB_HEIGHT && sx >= 0 && sx <= FB_WIDTH),
         .frame,
         .line,
         .we(fb_we),
@@ -258,9 +269,9 @@ module top_renderer (
                         v[1].x <= 32'b1111111111111111_1000000000000000; v[1].y <= 32'b1111111111111111_1000000000000000;
                         v[2].x <= 32'b0000000000000000_1000000000000000; v[2].y <= 32'b1111111111111111_1000000000000000;
 
-                        vc[0] <= 12'hF00;
-                        vc[1] <= 12'h0F0;
-                        vc[2] <= 12'h00F;
+                        vc[0] <= SW[4] ? 12'hF00 : 12'h000;
+                        vc[1] <= SW[5] ? 12'h0F0 : 12'h000;
+                        vc[2] <= SW[6] ? 12'h00F : 12'h000;
                     end
                     default: begin  // should never occur
                         v[0].x <= 32'b0000000000000000_0000000000000000; v[0].y <= 32'b0000000000000000_0000000000000000;

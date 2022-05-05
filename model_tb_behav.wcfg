@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="model_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="Utils" />
+            <top_module name="glbl" />
+            <top_module name="model_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <Cursor1Time time="20.513 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="157"></NameColumnWidth>
+      <ValueColumnWidth column_width="149"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="2" />
+   <wvobject fp_name="group13" type="group">
+      <obj_property name="label">tb</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/model_tb/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/v0" type="array">
+         <obj_property name="ElementShortName">v0</obj_property>
+         <obj_property name="ObjectShortName">v0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/v1" type="array">
+         <obj_property name="ElementShortName">v1</obj_property>
+         <obj_property name="ObjectShortName">v1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/v2" type="array">
+         <obj_property name="ElementShortName">v2</obj_property>
+         <obj_property name="ObjectShortName">v2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/c0" type="array">
+         <obj_property name="ElementShortName">c0</obj_property>
+         <obj_property name="ObjectShortName">c0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/c1" type="array">
+         <obj_property name="ElementShortName">c1</obj_property>
+         <obj_property name="ObjectShortName">c1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/c2" type="array">
+         <obj_property name="ElementShortName">c2</obj_property>
+         <obj_property name="ObjectShortName">c2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/reset" type="logic">
+         <obj_property name="ElementShortName">reset</obj_property>
+         <obj_property name="ObjectShortName">reset</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/face_start" type="logic">
+         <obj_property name="ElementShortName">face_start</obj_property>
+         <obj_property name="ObjectShortName">face_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/face_done" type="logic">
+         <obj_property name="ElementShortName">face_done</obj_property>
+         <obj_property name="ObjectShortName">face_done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group14" type="group">
+      <obj_property name="label">uut</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/model_tb/uut/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/reset" type="logic">
+         <obj_property name="ElementShortName">reset</obj_property>
+         <obj_property name="ObjectShortName">reset</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/face_start" type="logic">
+         <obj_property name="ElementShortName">face_start</obj_property>
+         <obj_property name="ObjectShortName">face_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/v0" type="array">
+         <obj_property name="ElementShortName">v0</obj_property>
+         <obj_property name="ObjectShortName">v0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/v1" type="array">
+         <obj_property name="ElementShortName">v1</obj_property>
+         <obj_property name="ObjectShortName">v1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/v2" type="array">
+         <obj_property name="ElementShortName">v2</obj_property>
+         <obj_property name="ObjectShortName">v2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/c0" type="array">
+         <obj_property name="ElementShortName">c0</obj_property>
+         <obj_property name="ObjectShortName">c0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/c1" type="array">
+         <obj_property name="ElementShortName">c1</obj_property>
+         <obj_property name="ObjectShortName">c1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/c2" type="array">
+         <obj_property name="ElementShortName">c2</obj_property>
+         <obj_property name="ObjectShortName">c2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/face_done" type="logic">
+         <obj_property name="ElementShortName">face_done</obj_property>
+         <obj_property name="ObjectShortName">face_done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/rom_addr" type="array">
+         <obj_property name="ElementShortName">rom_addr[3:0]</obj_property>
+         <obj_property name="ObjectShortName">rom_addr[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/rom_data" type="array">
+         <obj_property name="ElementShortName">rom_data[0:11][191:0]</obj_property>
+         <obj_property name="ObjectShortName">rom_data[0:11][191:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/face_counter" type="array">
+         <obj_property name="ElementShortName">face_counter[4:0]</obj_property>
+         <obj_property name="ObjectShortName">face_counter[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/state" type="array">
+         <obj_property name="ElementShortName">state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/FACE_COUNT" type="array">
+         <obj_property name="ElementShortName">FACE_COUNT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FACE_COUNT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/VERT_COUNT" type="array">
+         <obj_property name="ElementShortName">VERT_COUNT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VERT_COUNT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/ROM_WIDTH" type="array">
+         <obj_property name="ElementShortName">ROM_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ROM_WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/ROM_DEPTH" type="array">
+         <obj_property name="ElementShortName">ROM_DEPTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ROM_DEPTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/model_tb/uut/ROM_FILE" type="array">
+         <obj_property name="ElementShortName">ROM_FILE[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ROM_FILE[63:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

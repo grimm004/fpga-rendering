@@ -4,7 +4,10 @@
 import Utils::mat4f;
 import Utils::vec4f;
 
-module transform_matrix (
+module transform_matrix #(
+    parameter WIDTH  = 640,
+    parameter HEIGHT = 480
+    ) (
     input  wire logic clk,
     input  wire logic start,
     input  wire mat4f mat_rotation,
@@ -15,6 +18,9 @@ module transform_matrix (
     output      logic busy,
     output      logic done
     );
+
+    localparam HALF_WIDTH_FP  = (WIDTH  / 2) << 16;
+    localparam HALF_HEIGHT_FP = (HEIGHT / 2) << 16;
 
     localparam N = 5;
 
@@ -27,8 +33,8 @@ module transform_matrix (
 
     // Screen space transform
     mat4f mat_screen_space = '{
-        32'b0000000101000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000101000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b1111111100010000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000011110000_0000000000000000, 
+        HALF_WIDTH_FP,                         32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, HALF_WIDTH_FP, 
+        32'b0000000000000000_0000000000000000, -HALF_HEIGHT_FP,                       32'b0000000000000000_0000000000000000, HALF_HEIGHT_FP, 
         32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 
         32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
     };
@@ -41,8 +47,6 @@ module transform_matrix (
     assign mats[2] = mat_translation;
     assign mats[3] = mat_proj;
     assign mats[4] = mat_screen_space;
-
-    // mat_tr = mat_screen_space * mat_proj * mat_translation * mat_scale * mat_rotation * mat_identity
 
     logic [$clog2(N)-1:0] i;
 

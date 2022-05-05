@@ -60,7 +60,6 @@ module rotation_matrix (
                 state <= SIN;
             end
             SIN: begin
-//                sin_theta <= {{8{sin_data[15]}}, sin_data, {8{1'b0}}};
                 sin_theta <= sin_data;
                 sin_id = theta_cos[SIN_ADDRW-1:0] + theta_cos[-1];
                 state <= COS;

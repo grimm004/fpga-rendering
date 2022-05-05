@@ -34,7 +34,7 @@ def fixed_to_dec(bits):
     return n
 
 
-def to_fixed_literal(n):
+def to_fixed(n):
     data = []
 
     for i in range(INT_W - 1, -FIXED_W - 1, -1):
@@ -52,6 +52,11 @@ def to_fixed_literal(n):
             data.append(1)
             n -= p
 
+    return data
+
+
+def to_fixed_literal(n):
+    data = to_fixed(n)
     return f"32'b{''.join(map(str, data[:INT_W]))}_{''.join(map(str, data[INT_W:]))}"
 
 
@@ -113,28 +118,31 @@ def perspective_divide(a):
 if __name__ == "__main__":
     import sys
 
+    v0 = [320, 160]
+    v1 = [240, 300]
+    v2 = [400, 320]
+
     vs = [
-        [320.0, 160.0, 0xF],
-        [240.0, 320.0, 0x0],
-        [400.0, 320.0, 0x0]
+        [*v0, 0xF],
+        [*v1, 0x0],
+        [*v2, 0x0]
     ]
 
     dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
     print("Red gradients:  ", dz_dx, dz_dy)
 
     vs = [
-        [320.0, 160.0, 0x0],
-        [240.0, 320.0, 0xF],
-        [400.0, 320.0, 0x0]
+        [*v0, 0x0],
+        [*v1, 0xF],
+        [*v2, 0x0]
     ]
-
     dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
     print("Green gradients:", dz_dx, dz_dy)
 
     vs = [
-        [320.0, 160.0, 0x0],
-        [240.0, 320.0, 0x0],
-        [400.0, 320.0, 0xF]
+        [*v0, 0x0],
+        [*v1, 0x0],
+        [*v2, 0xF]
     ]
 
     dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
