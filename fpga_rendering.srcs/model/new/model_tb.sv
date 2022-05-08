@@ -1,17 +1,20 @@
 `default_nettype none
 `timescale 1ns / 1ps
 
-import Utils::vec2f;
+import Utils::vec3f;
 
 module model_tb;
 
     logic clk;
 
-    vec2f v0, v1, v2;
-    vec2f c0, c1, c2;
+    vec3f v0, v1, v2;
+    vec3f c0, c1, c2;
     logic reset = 0, face_start, face_done, busy, done;
 
-    model uut (
+    model #(
+        .FACE_COUNT(12),
+        .FILE("cube.mem")
+    ) uut (
         .clk,
         .reset,
         .face_start,
@@ -30,105 +33,115 @@ module model_tb;
     end
 
     initial begin
-        face_start = 1'b1;
-
-        #10
-
-        face_start = 1'b0;
-
-        #30
+        #100;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
 
         face_start = 1'b0;
 
-        #30
+        #300;
     
         face_start = 1'b1;
 
-        #10
+        #10;
+
+        face_start = 1'b0;
+
+        #300;
+    
+        face_start = 1'b1;
+
+        #10;
+
+        face_start = 1'b0;
+
+        #300;
+    
+        face_start = 1'b1;
+
+        #10;
 
         face_start = 1'b0;
     end

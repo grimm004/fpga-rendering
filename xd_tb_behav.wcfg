@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="xd_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="xd_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000699954 ms"></ZoomStartTime>
+      <ZoomEndTime time="0.000700010 ms"></ZoomEndTime>
+      <Cursor1Time time="0.000700000 ms"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="217"></NameColumnWidth>
+      <ValueColumnWidth column_width="349"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="3" />
+   <wvobject fp_name="group4181" type="group">
+      <obj_property name="label">tb</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/xd_tb/clk_slow" type="logic">
+         <obj_property name="ElementShortName">clk_slow</obj_property>
+         <obj_property name="ObjectShortName">clk_slow</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/clk_fast" type="logic">
+         <obj_property name="ElementShortName">clk_fast</obj_property>
+         <obj_property name="ObjectShortName">clk_fast</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/rst_slow" type="logic">
+         <obj_property name="ElementShortName">rst_slow</obj_property>
+         <obj_property name="ObjectShortName">rst_slow</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/rst_fast" type="logic">
+         <obj_property name="ElementShortName">rst_fast</obj_property>
+         <obj_property name="ObjectShortName">rst_fast</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/pulse_a_src" type="logic">
+         <obj_property name="ElementShortName">pulse_a_src</obj_property>
+         <obj_property name="ObjectShortName">pulse_a_src</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/pulse_a_dst" type="logic">
+         <obj_property name="ElementShortName">pulse_a_dst</obj_property>
+         <obj_property name="ObjectShortName">pulse_a_dst</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/pulse_b_src" type="logic">
+         <obj_property name="ElementShortName">pulse_b_src</obj_property>
+         <obj_property name="ObjectShortName">pulse_b_src</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/pulse_b_dst" type="logic">
+         <obj_property name="ElementShortName">pulse_b_dst</obj_property>
+         <obj_property name="ObjectShortName">pulse_b_dst</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/CLK_SLOW_PERIOD" type="array">
+         <obj_property name="ElementShortName">CLK_SLOW_PERIOD[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CLK_SLOW_PERIOD[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/CLK_FAST_PERIOD" type="array">
+         <obj_property name="ElementShortName">CLK_FAST_PERIOD[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CLK_FAST_PERIOD[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group4182" type="group">
+      <obj_property name="label">xd_slowfast</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/xd_tb/xd_slowfast/clk_i" type="logic">
+         <obj_property name="ElementShortName">clk_i</obj_property>
+         <obj_property name="ObjectShortName">clk_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_slowfast/clk_o" type="logic">
+         <obj_property name="ElementShortName">clk_o</obj_property>
+         <obj_property name="ObjectShortName">clk_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_slowfast/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_slowfast/rst_o" type="logic">
+         <obj_property name="ElementShortName">rst_o</obj_property>
+         <obj_property name="ObjectShortName">rst_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_slowfast/i" type="logic">
+         <obj_property name="ElementShortName">i</obj_property>
+         <obj_property name="ObjectShortName">i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_slowfast/o" type="logic">
+         <obj_property name="ElementShortName">o</obj_property>
+         <obj_property name="ObjectShortName">o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_slowfast/toggle_i" type="logic">
+         <obj_property name="ElementShortName">toggle_i</obj_property>
+         <obj_property name="ObjectShortName">toggle_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_slowfast/shr_o" type="array">
+         <obj_property name="ElementShortName">shr_o[3:0]</obj_property>
+         <obj_property name="ObjectShortName">shr_o[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group4183" type="group">
+      <obj_property name="label">xd_fastslow</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/xd_tb/xd_fastslow/clk_i" type="logic">
+         <obj_property name="ElementShortName">clk_i</obj_property>
+         <obj_property name="ObjectShortName">clk_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_fastslow/clk_o" type="logic">
+         <obj_property name="ElementShortName">clk_o</obj_property>
+         <obj_property name="ObjectShortName">clk_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_fastslow/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_fastslow/rst_o" type="logic">
+         <obj_property name="ElementShortName">rst_o</obj_property>
+         <obj_property name="ObjectShortName">rst_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_fastslow/i" type="logic">
+         <obj_property name="ElementShortName">i</obj_property>
+         <obj_property name="ObjectShortName">i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_fastslow/o" type="logic">
+         <obj_property name="ElementShortName">o</obj_property>
+         <obj_property name="ObjectShortName">o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_fastslow/toggle_i" type="logic">
+         <obj_property name="ElementShortName">toggle_i</obj_property>
+         <obj_property name="ObjectShortName">toggle_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/xd_tb/xd_fastslow/shr_o" type="array">
+         <obj_property name="ElementShortName">shr_o[3:0]</obj_property>
+         <obj_property name="ObjectShortName">shr_o[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

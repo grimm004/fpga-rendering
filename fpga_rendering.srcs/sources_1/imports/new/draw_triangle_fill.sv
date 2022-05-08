@@ -8,9 +8,7 @@
 
 import Utils::coli;
 import Utils::colf;
-import Utils::valf;
 import Utils::vec2i;
-import Utils::vec2f;
 import Utils::vert2i;
 import Utils::vert2f;
 import Utils::interpolants;
@@ -32,12 +30,25 @@ module draw_triangle_fill #(
     );
 
     vert2i v0s, v1s, v2s;
-
     vert2f v0sf, v1sf, v2sf;
 
     assign v0sf = {{v0s.x, 16'b0}, {v0s.y, 16'b0}, {{12'b0, v0s.col.r, 16'b0}, {12'b0, v0s.col.g, 16'b0}, {12'b0, v0s.col.b, 16'b0}}};
     assign v1sf = {{v1s.x, 16'b0}, {v1s.y, 16'b0}, {{12'b0, v1s.col.r, 16'b0}, {12'b0, v1s.col.g, 16'b0}, {12'b0, v1s.col.b, 16'b0}}};
     assign v2sf = {{v2s.x, 16'b0}, {v2s.y, 16'b0}, {{12'b0, v2s.col.r, 16'b0}, {12'b0, v2s.col.g, 16'b0}, {12'b0, v2s.col.b, 16'b0}}};
+
+    logic ta_start, ta_busy, ta_backface;
+
+    triangle_area ta (
+        .clk,
+        .start(ta_start),
+        .v({v0s.x, v0s.y}),
+        .va({v2s.x, v2s.y}),
+        .vb({v1s.x, v1s.y}),
+        .handedness(ta_backface),
+        .area(),
+        .busy(ta_busy),
+        .done()
+    );
 
     logic ig_start;
     logic [0:2] ig_busy;
@@ -106,7 +117,6 @@ module draw_triangle_fill #(
     logic drawing_h;
     logic busy_a, busy_b, busy_h;
     logic b_edge;  // which B edge are we drawing?
-//    logic handedness;  // 0 - mid vert left of bottom-top edge, 1 - mid vert right of bottom-top edge
 
     // pipeline completion signals to match coordinates
     logic busy_p1, done_p1;
@@ -152,10 +162,15 @@ module draw_triangle_fill #(
 
                 // Whilst we run INIT_A and INIT_B0, calculate the gradients
                 ig_start <= 1;
+                // Additiaonlly, calculate triangle area for backface culling
+                ta_start <= 1;
             end
             // Now v0s.y <= v1s.y <= v2s.y
             INIT_A: begin
                 state <= INIT_B0;
+
+                ig_start <= 0;
+                ta_start <= 0;
 
                 v0a <= v0s;
                 v1a <= v2s;
@@ -179,9 +194,11 @@ module draw_triangle_fill #(
                 prev_y <= v0s.y;
 
                 // Move to START_A when gradients are calculated
-                ig_start <= 0;
-                if (!ig_busy)
+                if (!ig_busy && !ta_busy) begin
+                    // Cancel render for triangle backface
+//                    state <= ta_backface ? DONE : START_A;
                     state <= START_A;
+                end
             end
             INIT_B1: begin
                 state <= START_B;  // we don't need to start A again
@@ -234,11 +251,13 @@ module draw_triangle_fill #(
                     state <= SORT_0;
                     busy_p1 <= 1;
                 end
+//                cancel <= 0;
                 done_p1 <= 0;
             end
         endcase
 
         if (rst) begin
+//            cancel <= 0;
             state <= IDLE;
             busy_p1 <= 0;
             done_p1 <= 0;
@@ -315,7 +334,6 @@ module draw_triangle_fill #(
         .rst,
         .start(state == START_H),
         .oe(oe_h),
-        .grads,
         .interp0(interp0h),
         .interp1(interp1h),
         .x0(x0h),

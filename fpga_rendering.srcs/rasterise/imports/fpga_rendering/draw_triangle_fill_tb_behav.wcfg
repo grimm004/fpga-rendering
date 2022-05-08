@@ -13,22 +13,21 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000000 us"></ZoomStartTime>
-      <ZoomEndTime time="64.000000 us"></ZoomEndTime>
-      <Cursor1Time time="11.715000 us"></Cursor1Time>
+      <ZoomEndTime time="317.560983 us"></ZoomEndTime>
+      <Cursor1Time time="460.505100 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="217"></NameColumnWidth>
-      <ValueColumnWidth column_width="357"></ValueColumnWidth>
+      <ValueColumnWidth column_width="349"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="5" />
+   <WVObjectSize size="10" />
+   <wvobject fp_name="/draw_triangle_fill_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
    <wvobject fp_name="group211" type="group">
       <obj_property name="label">tb</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/draw_triangle_fill_tb/clk" type="logic">
-         <obj_property name="ElementShortName">clk</obj_property>
-         <obj_property name="ObjectShortName">clk</obj_property>
-      </wvobject>
       <wvobject fp_name="/draw_triangle_fill_tb/v0" type="array">
          <obj_property name="ElementShortName">v0</obj_property>
          <obj_property name="ObjectShortName">v0</obj_property>
@@ -74,9 +73,22 @@
    <wvobject fp_name="group212" type="group">
       <obj_property name="label">uut</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/draw_triangle_fill_tb/uut/state" type="array">
          <obj_property name="ElementShortName">state[31:0]</obj_property>
          <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/draw_triangle_fill_tb/uut/v0s" type="array">
+         <obj_property name="ElementShortName">v0s</obj_property>
+         <obj_property name="ObjectShortName">v0s</obj_property>
+      </wvobject>
+      <wvobject fp_name="/draw_triangle_fill_tb/uut/v1s" type="array">
+         <obj_property name="ElementShortName">v1s</obj_property>
+         <obj_property name="ObjectShortName">v1s</obj_property>
+      </wvobject>
+      <wvobject fp_name="/draw_triangle_fill_tb/uut/v2s" type="array">
+         <obj_property name="ElementShortName">v2s</obj_property>
+         <obj_property name="ObjectShortName">v2s</obj_property>
       </wvobject>
       <wvobject fp_name="/draw_triangle_fill_tb/uut/xa" type="array">
          <obj_property name="ElementShortName">xa[15:0]</obj_property>
@@ -159,6 +171,22 @@
          <obj_property name="radix_otherWidth">0</obj_property>
       </wvobject>
    </wvobject>
+   <wvobject fp_name="/draw_triangle_fill_tb/uut/ta_start" type="logic">
+      <obj_property name="ElementShortName">ta_start</obj_property>
+      <obj_property name="ObjectShortName">ta_start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/draw_triangle_fill_tb/uut/ta_busy" type="logic">
+      <obj_property name="ElementShortName">ta_busy</obj_property>
+      <obj_property name="ObjectShortName">ta_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/draw_triangle_fill_tb/uut/ta_backface" type="logic">
+      <obj_property name="ElementShortName">ta_backface</obj_property>
+      <obj_property name="ObjectShortName">ta_backface</obj_property>
+   </wvobject>
+   <wvobject fp_name="/draw_triangle_fill_tb/uut/ig_start" type="logic">
+      <obj_property name="ElementShortName">ig_start</obj_property>
+      <obj_property name="ObjectShortName">ig_start</obj_property>
+   </wvobject>
    <wvobject fp_name="group114" type="group">
       <obj_property name="label">draw_line_1d</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -186,39 +214,6 @@
          <obj_property name="radix_fractionWidth">16</obj_property>
          <obj_property name="radix_otherWidth">0</obj_property>
          <obj_property name="isExpanded"></obj_property>
-         <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp.col" type="array">
-            <obj_property name="ElementShortName">.col</obj_property>
-            <obj_property name="ObjectShortName">.col</obj_property>
-            <obj_property name="Radix">REALRADIX</obj_property>
-            <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-            <obj_property name="radix_fractionWidth">16</obj_property>
-            <obj_property name="radix_otherWidth">0</obj_property>
-            <obj_property name="isExpanded"></obj_property>
-            <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp.col.r" type="array">
-               <obj_property name="ElementShortName">.r[15:-16]</obj_property>
-               <obj_property name="ObjectShortName">.r[15:-16]</obj_property>
-               <obj_property name="Radix">REALRADIX</obj_property>
-               <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-               <obj_property name="radix_fractionWidth">16</obj_property>
-               <obj_property name="radix_otherWidth">0</obj_property>
-            </wvobject>
-            <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp.col.g" type="array">
-               <obj_property name="ElementShortName">.g[15:-16]</obj_property>
-               <obj_property name="ObjectShortName">.g[15:-16]</obj_property>
-               <obj_property name="Radix">REALRADIX</obj_property>
-               <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-               <obj_property name="radix_fractionWidth">16</obj_property>
-               <obj_property name="radix_otherWidth">0</obj_property>
-            </wvobject>
-            <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp.col.b" type="array">
-               <obj_property name="ElementShortName">.b[15:-16]</obj_property>
-               <obj_property name="ObjectShortName">.b[15:-16]</obj_property>
-               <obj_property name="Radix">REALRADIX</obj_property>
-               <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-               <obj_property name="radix_fractionWidth">16</obj_property>
-               <obj_property name="radix_otherWidth">0</obj_property>
-            </wvobject>
-         </wvobject>
       </wvobject>
       <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp0" type="array">
          <obj_property name="ElementShortName">interp0</obj_property>
@@ -228,39 +223,6 @@
          <obj_property name="radix_fractionWidth">16</obj_property>
          <obj_property name="radix_otherWidth">0</obj_property>
          <obj_property name="isExpanded"></obj_property>
-         <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp0.col" type="array">
-            <obj_property name="ElementShortName">.col</obj_property>
-            <obj_property name="ObjectShortName">.col</obj_property>
-            <obj_property name="Radix">REALRADIX</obj_property>
-            <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-            <obj_property name="radix_fractionWidth">16</obj_property>
-            <obj_property name="radix_otherWidth">0</obj_property>
-            <obj_property name="isExpanded"></obj_property>
-            <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp0.col.r" type="array">
-               <obj_property name="ElementShortName">.r[15:-16]</obj_property>
-               <obj_property name="ObjectShortName">.r[15:-16]</obj_property>
-               <obj_property name="Radix">REALRADIX</obj_property>
-               <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-               <obj_property name="radix_fractionWidth">16</obj_property>
-               <obj_property name="radix_otherWidth">0</obj_property>
-            </wvobject>
-            <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp0.col.g" type="array">
-               <obj_property name="ElementShortName">.g[15:-16]</obj_property>
-               <obj_property name="ObjectShortName">.g[15:-16]</obj_property>
-               <obj_property name="Radix">REALRADIX</obj_property>
-               <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-               <obj_property name="radix_fractionWidth">16</obj_property>
-               <obj_property name="radix_otherWidth">0</obj_property>
-            </wvobject>
-            <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp0.col.b" type="array">
-               <obj_property name="ElementShortName">.b[15:-16]</obj_property>
-               <obj_property name="ObjectShortName">.b[15:-16]</obj_property>
-               <obj_property name="Radix">REALRADIX</obj_property>
-               <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-               <obj_property name="radix_fractionWidth">16</obj_property>
-               <obj_property name="radix_otherWidth">0</obj_property>
-            </wvobject>
-         </wvobject>
       </wvobject>
       <wvobject fp_name="/draw_triangle_fill_tb/uut/draw_h_line/interp1" type="array">
          <obj_property name="ElementShortName">interp1</obj_property>

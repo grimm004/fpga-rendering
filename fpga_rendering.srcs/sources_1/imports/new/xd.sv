@@ -17,6 +17,7 @@ module xd (
 
     // toggle reg when pulse received in source domain
     logic toggle_i;
+
     always_ff @(posedge clk_i) begin
         toggle_i <= toggle_i ^ i;
         if (rst_i) toggle_i <= 1'b0;

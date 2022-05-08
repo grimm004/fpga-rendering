@@ -1,0 +1,1366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_renderer_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="Utils" />
+            <top_module name="glbl" />
+            <top_module name="top_renderer_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="11.050001 us"></ZoomEndTime>
+      <Cursor1Time time="0.105000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="217"></NameColumnWidth>
+      <ValueColumnWidth column_width="349"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="group3755" type="group">
+      <obj_property name="label">tb</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/top_renderer_tb/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/btn_rst" type="logic">
+         <obj_property name="ElementShortName">btn_rst</obj_property>
+         <obj_property name="ObjectShortName">btn_rst</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/SW" type="array">
+         <obj_property name="ElementShortName">SW[15:0]</obj_property>
+         <obj_property name="ObjectShortName">SW[15:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/LED" type="array">
+         <obj_property name="ElementShortName">LED[15:0]</obj_property>
+         <obj_property name="ObjectShortName">LED[15:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/vga_hsync" type="logic">
+         <obj_property name="ElementShortName">vga_hsync</obj_property>
+         <obj_property name="ObjectShortName">vga_hsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/vga_vsync" type="logic">
+         <obj_property name="ElementShortName">vga_vsync</obj_property>
+         <obj_property name="ObjectShortName">vga_vsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/vga_r" type="array">
+         <obj_property name="ElementShortName">vga_r[3:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_r[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/vga_g" type="array">
+         <obj_property name="ElementShortName">vga_g[3:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_g[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/vga_b" type="array">
+         <obj_property name="ElementShortName">vga_b[3:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_b[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3756" type="group">
+      <obj_property name="label">uut</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/clk_100m" type="logic">
+         <obj_property name="ElementShortName">clk_100m</obj_property>
+         <obj_property name="ObjectShortName">clk_100m</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/btn_rst" type="logic">
+         <obj_property name="ElementShortName">btn_rst</obj_property>
+         <obj_property name="ObjectShortName">btn_rst</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/SW" type="array">
+         <obj_property name="ElementShortName">SW[15:0]</obj_property>
+         <obj_property name="ObjectShortName">SW[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/LED" type="array">
+         <obj_property name="ElementShortName">LED[15:0]</obj_property>
+         <obj_property name="ObjectShortName">LED[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vga_hsync" type="logic">
+         <obj_property name="ElementShortName">vga_hsync</obj_property>
+         <obj_property name="ObjectShortName">vga_hsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vga_vsync" type="logic">
+         <obj_property name="ElementShortName">vga_vsync</obj_property>
+         <obj_property name="ObjectShortName">vga_vsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vga_r" type="array">
+         <obj_property name="ElementShortName">vga_r[3:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_r[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vga_g" type="array">
+         <obj_property name="ElementShortName">vga_g[3:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_g[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vga_b" type="array">
+         <obj_property name="ElementShortName">vga_b[3:0]</obj_property>
+         <obj_property name="ObjectShortName">vga_b[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/clk_pix" type="logic">
+         <obj_property name="ElementShortName">clk_pix</obj_property>
+         <obj_property name="ObjectShortName">clk_pix</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/clk_locked" type="logic">
+         <obj_property name="ElementShortName">clk_locked</obj_property>
+         <obj_property name="ObjectShortName">clk_locked</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/sx" type="array">
+         <obj_property name="ElementShortName">sx[15:0]</obj_property>
+         <obj_property name="ObjectShortName">sx[15:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/sy" type="array">
+         <obj_property name="ElementShortName">sy[15:0]</obj_property>
+         <obj_property name="ObjectShortName">sy[15:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/hsync" type="logic">
+         <obj_property name="ElementShortName">hsync</obj_property>
+         <obj_property name="ObjectShortName">hsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vsync" type="logic">
+         <obj_property name="ElementShortName">vsync</obj_property>
+         <obj_property name="ObjectShortName">vsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/frame" type="logic">
+         <obj_property name="ElementShortName">frame</obj_property>
+         <obj_property name="ObjectShortName">frame</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/line" type="logic">
+         <obj_property name="ElementShortName">line</obj_property>
+         <obj_property name="ObjectShortName">line</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/frame_sys" type="logic">
+         <obj_property name="ElementShortName">frame_sys</obj_property>
+         <obj_property name="ObjectShortName">frame_sys</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mat_scale" type="array">
+         <obj_property name="ElementShortName">mat_scale</obj_property>
+         <obj_property name="ObjectShortName">mat_scale</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mat_translation" type="array">
+         <obj_property name="ElementShortName">mat_translation</obj_property>
+         <obj_property name="ObjectShortName">mat_translation</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mat_rotation_3deg_y" type="array">
+         <obj_property name="ElementShortName">mat_rotation_3deg_y</obj_property>
+         <obj_property name="ObjectShortName">mat_rotation_3deg_y</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mat_perspective_proj" type="array">
+         <obj_property name="ElementShortName">mat_perspective_proj</obj_property>
+         <obj_property name="ObjectShortName">mat_perspective_proj</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/theta" type="array">
+         <obj_property name="ElementShortName">theta[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">theta[15:-16]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mat_rotation" type="array">
+         <obj_property name="ElementShortName">mat_rotation</obj_property>
+         <obj_property name="ObjectShortName">mat_rotation</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_start" type="logic">
+         <obj_property name="ElementShortName">rot_start</obj_property>
+         <obj_property name="ObjectShortName">rot_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_busy" type="logic">
+         <obj_property name="ElementShortName">rot_busy</obj_property>
+         <obj_property name="ObjectShortName">rot_busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mtr_start" type="logic">
+         <obj_property name="ElementShortName">mtr_start</obj_property>
+         <obj_property name="ObjectShortName">mtr_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mtr_busy" type="logic">
+         <obj_property name="ElementShortName">mtr_busy</obj_property>
+         <obj_property name="ObjectShortName">mtr_busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mat_tr" type="array">
+         <obj_property name="ElementShortName">mat_tr</obj_property>
+         <obj_property name="ObjectShortName">mat_tr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mat_identity" type="array">
+         <obj_property name="ElementShortName">mat_identity</obj_property>
+         <obj_property name="ObjectShortName">mat_identity</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/v" type="array">
+         <obj_property name="ElementShortName">v[0:2]</obj_property>
+         <obj_property name="ObjectShortName">v[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vc" type="array">
+         <obj_property name="ElementShortName">vc[0:2]</obj_property>
+         <obj_property name="ObjectShortName">vc[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_reset" type="logic">
+         <obj_property name="ElementShortName">model_reset</obj_property>
+         <obj_property name="ObjectShortName">model_reset</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/face_start" type="logic">
+         <obj_property name="ElementShortName">face_start</obj_property>
+         <obj_property name="ObjectShortName">face_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/face_done" type="logic">
+         <obj_property name="ElementShortName">face_done</obj_property>
+         <obj_property name="ObjectShortName">face_done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_complete" type="logic">
+         <obj_property name="ElementShortName">model_complete</obj_property>
+         <obj_property name="ObjectShortName">model_complete</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vtr_start" type="logic">
+         <obj_property name="ElementShortName">vtr_start</obj_property>
+         <obj_property name="ObjectShortName">vtr_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vtr_busy" type="logic">
+         <obj_property name="ElementShortName">vtr_busy</obj_property>
+         <obj_property name="ObjectShortName">vtr_busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vtr_done" type="logic">
+         <obj_property name="ElementShortName">vtr_done</obj_property>
+         <obj_property name="ObjectShortName">vtr_done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/v_tr" type="array">
+         <obj_property name="ElementShortName">v_tr[0:2]</obj_property>
+         <obj_property name="ObjectShortName">v_tr[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_we" type="logic">
+         <obj_property name="ElementShortName">fb_we</obj_property>
+         <obj_property name="ObjectShortName">fb_we</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_pos" type="array">
+         <obj_property name="ElementShortName">draw_pos</obj_property>
+         <obj_property name="ObjectShortName">draw_pos</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_col" type="array">
+         <obj_property name="ElementShortName">fb_col[11:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_col[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_busy" type="logic">
+         <obj_property name="ElementShortName">fb_busy</obj_property>
+         <obj_property name="ObjectShortName">fb_busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_red" type="array">
+         <obj_property name="ElementShortName">fb_red[3:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_red[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_green" type="array">
+         <obj_property name="ElementShortName">fb_green[3:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_green[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_blue" type="array">
+         <obj_property name="ElementShortName">fb_blue[3:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_blue[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_clearing" type="logic">
+         <obj_property name="ElementShortName">fb_clearing</obj_property>
+         <obj_property name="ObjectShortName">fb_clearing</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_clearx" type="array">
+         <obj_property name="ElementShortName">fb_clearx[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_clearx[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_cleary" type="array">
+         <obj_property name="ElementShortName">fb_cleary[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_cleary[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_start" type="logic">
+         <obj_property name="ElementShortName">draw_start</obj_property>
+         <obj_property name="ObjectShortName">draw_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/drawing" type="logic">
+         <obj_property name="ElementShortName">drawing</obj_property>
+         <obj_property name="ObjectShortName">drawing</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_done" type="logic">
+         <obj_property name="ElementShortName">draw_done</obj_property>
+         <obj_property name="ObjectShortName">draw_done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/state" type="array">
+         <obj_property name="ElementShortName">state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/hsync_p1" type="logic">
+         <obj_property name="ElementShortName">hsync_p1</obj_property>
+         <obj_property name="ObjectShortName">hsync_p1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vsync_p1" type="logic">
+         <obj_property name="ElementShortName">vsync_p1</obj_property>
+         <obj_property name="ObjectShortName">vsync_p1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/CORDW" type="array">
+         <obj_property name="ElementShortName">CORDW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CORDW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/MODEL_FACE_COUNT" type="array">
+         <obj_property name="ElementShortName">MODEL_FACE_COUNT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">MODEL_FACE_COUNT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/MODEL_FILE" type="array">
+         <obj_property name="ElementShortName">MODEL_FILE[63:0]</obj_property>
+         <obj_property name="ObjectShortName">MODEL_FILE[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/FB_SCALE" type="array">
+         <obj_property name="ElementShortName">FB_SCALE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_SCALE[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/FB_WIDTH" type="array">
+         <obj_property name="ElementShortName">FB_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/FB_HEIGHT" type="array">
+         <obj_property name="ElementShortName">FB_HEIGHT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_HEIGHT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/FB_CHANW" type="array">
+         <obj_property name="ElementShortName">FB_CHANW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_CHANW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/FB_COLW" type="array">
+         <obj_property name="ElementShortName">FB_COLW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_COLW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/FB_CLEARCOL" type="array">
+         <obj_property name="ElementShortName">FB_CLEARCOL[11:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_CLEARCOL[11:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3757" type="group">
+      <obj_property name="label">clock_jen</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/clock_jen/clk_25mhz" type="logic">
+         <obj_property name="ElementShortName">clk_25mhz</obj_property>
+         <obj_property name="ObjectShortName">clk_25mhz</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/clock_jen/reset" type="logic">
+         <obj_property name="ElementShortName">reset</obj_property>
+         <obj_property name="ObjectShortName">reset</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/clock_jen/locked" type="logic">
+         <obj_property name="ElementShortName">locked</obj_property>
+         <obj_property name="ObjectShortName">locked</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/clock_jen/clk_100mhz" type="logic">
+         <obj_property name="ElementShortName">clk_100mhz</obj_property>
+         <obj_property name="ObjectShortName">clk_100mhz</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3758" type="group">
+      <obj_property name="label">display_inst</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/clk_pix" type="logic">
+         <obj_property name="ElementShortName">clk_pix</obj_property>
+         <obj_property name="ObjectShortName">clk_pix</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/rst_pix" type="logic">
+         <obj_property name="ElementShortName">rst_pix</obj_property>
+         <obj_property name="ObjectShortName">rst_pix</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/hsync" type="logic">
+         <obj_property name="ElementShortName">hsync</obj_property>
+         <obj_property name="ObjectShortName">hsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/vsync" type="logic">
+         <obj_property name="ElementShortName">vsync</obj_property>
+         <obj_property name="ObjectShortName">vsync</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/de" type="logic">
+         <obj_property name="ElementShortName">de</obj_property>
+         <obj_property name="ObjectShortName">de</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/frame" type="logic">
+         <obj_property name="ElementShortName">frame</obj_property>
+         <obj_property name="ObjectShortName">frame</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/line" type="logic">
+         <obj_property name="ElementShortName">line</obj_property>
+         <obj_property name="ObjectShortName">line</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/sx" type="array">
+         <obj_property name="ElementShortName">sx[15:0]</obj_property>
+         <obj_property name="ObjectShortName">sx[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/sy" type="array">
+         <obj_property name="ElementShortName">sy[15:0]</obj_property>
+         <obj_property name="ObjectShortName">sy[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/x" type="array">
+         <obj_property name="ElementShortName">x[15:0]</obj_property>
+         <obj_property name="ObjectShortName">x[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/y" type="array">
+         <obj_property name="ElementShortName">y[15:0]</obj_property>
+         <obj_property name="ObjectShortName">y[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/CORDW" type="array">
+         <obj_property name="ElementShortName">CORDW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CORDW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/H_RES" type="array">
+         <obj_property name="ElementShortName">H_RES[31:0]</obj_property>
+         <obj_property name="ObjectShortName">H_RES[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/V_RES" type="array">
+         <obj_property name="ElementShortName">V_RES[31:0]</obj_property>
+         <obj_property name="ObjectShortName">V_RES[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/H_FP" type="array">
+         <obj_property name="ElementShortName">H_FP[31:0]</obj_property>
+         <obj_property name="ObjectShortName">H_FP[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/H_SYNC" type="array">
+         <obj_property name="ElementShortName">H_SYNC[31:0]</obj_property>
+         <obj_property name="ObjectShortName">H_SYNC[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/H_BP" type="array">
+         <obj_property name="ElementShortName">H_BP[31:0]</obj_property>
+         <obj_property name="ObjectShortName">H_BP[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/V_FP" type="array">
+         <obj_property name="ElementShortName">V_FP[31:0]</obj_property>
+         <obj_property name="ObjectShortName">V_FP[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/V_SYNC" type="array">
+         <obj_property name="ElementShortName">V_SYNC[31:0]</obj_property>
+         <obj_property name="ObjectShortName">V_SYNC[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/V_BP" type="array">
+         <obj_property name="ElementShortName">V_BP[31:0]</obj_property>
+         <obj_property name="ObjectShortName">V_BP[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/H_POL" type="array">
+         <obj_property name="ElementShortName">H_POL[31:0]</obj_property>
+         <obj_property name="ObjectShortName">H_POL[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/V_POL" type="array">
+         <obj_property name="ElementShortName">V_POL[31:0]</obj_property>
+         <obj_property name="ObjectShortName">V_POL[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/H_STA" type="array">
+         <obj_property name="ElementShortName">H_STA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">H_STA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/HS_STA" type="array">
+         <obj_property name="ElementShortName">HS_STA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HS_STA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/HS_END" type="array">
+         <obj_property name="ElementShortName">HS_END[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HS_END[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/HA_STA" type="array">
+         <obj_property name="ElementShortName">HA_STA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HA_STA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/HA_END" type="array">
+         <obj_property name="ElementShortName">HA_END[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HA_END[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/V_STA" type="array">
+         <obj_property name="ElementShortName">V_STA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">V_STA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/VS_STA" type="array">
+         <obj_property name="ElementShortName">VS_STA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VS_STA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/VS_END" type="array">
+         <obj_property name="ElementShortName">VS_END[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VS_END[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/VA_STA" type="array">
+         <obj_property name="ElementShortName">VA_STA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VA_STA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/display_inst/VA_END" type="array">
+         <obj_property name="ElementShortName">VA_END[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VA_END[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3759" type="group">
+      <obj_property name="label">xd_frame</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/clk_i" type="logic">
+         <obj_property name="ElementShortName">clk_i</obj_property>
+         <obj_property name="ObjectShortName">clk_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/clk_o" type="logic">
+         <obj_property name="ElementShortName">clk_o</obj_property>
+         <obj_property name="ObjectShortName">clk_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/rst_i" type="logic">
+         <obj_property name="ElementShortName">rst_i</obj_property>
+         <obj_property name="ObjectShortName">rst_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/rst_o" type="logic">
+         <obj_property name="ElementShortName">rst_o</obj_property>
+         <obj_property name="ObjectShortName">rst_o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/i" type="logic">
+         <obj_property name="ElementShortName">i</obj_property>
+         <obj_property name="ObjectShortName">i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/o" type="logic">
+         <obj_property name="ElementShortName">o</obj_property>
+         <obj_property name="ObjectShortName">o</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/toggle_i" type="logic">
+         <obj_property name="ElementShortName">toggle_i</obj_property>
+         <obj_property name="ObjectShortName">toggle_i</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/xd_frame/shr_o" type="array">
+         <obj_property name="ElementShortName">shr_o[3:0]</obj_property>
+         <obj_property name="ObjectShortName">shr_o[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3760" type="group">
+      <obj_property name="label">rot_mat_inst</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/theta" type="array">
+         <obj_property name="ElementShortName">theta[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">theta[15:-16]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/mat_rotation" type="array">
+         <obj_property name="ElementShortName">mat_rotation</obj_property>
+         <obj_property name="ObjectShortName">mat_rotation</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/sin_theta" type="array">
+         <obj_property name="ElementShortName">sin_theta[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">sin_theta[15:-16]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/cos_theta" type="array">
+         <obj_property name="ElementShortName">cos_theta[15:-16]</obj_property>
+         <obj_property name="ObjectShortName">cos_theta[15:-16]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/theta_sin" type="array">
+         <obj_property name="ElementShortName">theta_sin[31:-32]</obj_property>
+         <obj_property name="ObjectShortName">theta_sin[31:-32]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/theta_cos" type="array">
+         <obj_property name="ElementShortName">theta_cos[31:-32]</obj_property>
+         <obj_property name="ObjectShortName">theta_cos[31:-32]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/sin_id" type="array">
+         <obj_property name="ElementShortName">sin_id[9:0]</obj_property>
+         <obj_property name="ObjectShortName">sin_id[9:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/sin_data" type="array">
+         <obj_property name="ElementShortName">sin_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">sin_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/state" type="array">
+         <obj_property name="ElementShortName">state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/SIN_DEPTH" type="array">
+         <obj_property name="ElementShortName">SIN_DEPTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SIN_DEPTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/SIN_WIDTH" type="array">
+         <obj_property name="ElementShortName">SIN_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SIN_WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/SIN_DATAW" type="array">
+         <obj_property name="ElementShortName">SIN_DATAW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SIN_DATAW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/rot_mat_inst/SIN_ADDRW" type="array">
+         <obj_property name="ElementShortName">SIN_ADDRW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SIN_ADDRW[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3761" type="group">
+      <obj_property name="label">mt</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_rotation" type="array">
+         <obj_property name="ElementShortName">mat_rotation</obj_property>
+         <obj_property name="ObjectShortName">mat_rotation</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_scale" type="array">
+         <obj_property name="ElementShortName">mat_scale</obj_property>
+         <obj_property name="ObjectShortName">mat_scale</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_translation" type="array">
+         <obj_property name="ElementShortName">mat_translation</obj_property>
+         <obj_property name="ObjectShortName">mat_translation</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_proj" type="array">
+         <obj_property name="ElementShortName">mat_proj</obj_property>
+         <obj_property name="ObjectShortName">mat_proj</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_tr" type="array">
+         <obj_property name="ElementShortName">mat_tr</obj_property>
+         <obj_property name="ObjectShortName">mat_tr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_identity" type="array">
+         <obj_property name="ElementShortName">mat_identity</obj_property>
+         <obj_property name="ObjectShortName">mat_identity</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_screen_space" type="array">
+         <obj_property name="ElementShortName">mat_screen_space</obj_property>
+         <obj_property name="ObjectShortName">mat_screen_space</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mats" type="array">
+         <obj_property name="ElementShortName">mats[0:4]</obj_property>
+         <obj_property name="ObjectShortName">mats[0:4]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_acc" type="array">
+         <obj_property name="ElementShortName">mat_acc</obj_property>
+         <obj_property name="ObjectShortName">mat_acc</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/i" type="array">
+         <obj_property name="ElementShortName">i[2:0]</obj_property>
+         <obj_property name="ObjectShortName">i[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/tr_start" type="logic">
+         <obj_property name="ElementShortName">tr_start</obj_property>
+         <obj_property name="ObjectShortName">tr_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/tr_done" type="logic">
+         <obj_property name="ElementShortName">tr_done</obj_property>
+         <obj_property name="ObjectShortName">tr_done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/mat_product" type="array">
+         <obj_property name="ElementShortName">mat_product</obj_property>
+         <obj_property name="ObjectShortName">mat_product</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/tr_state" type="array">
+         <obj_property name="ElementShortName">tr_state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tr_state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/WIDTH" type="array">
+         <obj_property name="ElementShortName">WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/HEIGHT" type="array">
+         <obj_property name="ElementShortName">HEIGHT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HEIGHT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/HALF_WIDTH_FP" type="array">
+         <obj_property name="ElementShortName">HALF_WIDTH_FP[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HALF_WIDTH_FP[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/HALF_HEIGHT_FP" type="array">
+         <obj_property name="ElementShortName">HALF_HEIGHT_FP[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HALF_HEIGHT_FP[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/mt/N" type="array">
+         <obj_property name="ElementShortName">N[31:0]</obj_property>
+         <obj_property name="ObjectShortName">N[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3926" type="group">
+      <obj_property name="label">model_loader</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/reset" type="logic">
+         <obj_property name="ElementShortName">reset</obj_property>
+         <obj_property name="ObjectShortName">reset</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/face_start" type="logic">
+         <obj_property name="ElementShortName">face_start</obj_property>
+         <obj_property name="ObjectShortName">face_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/v0" type="array">
+         <obj_property name="ElementShortName">v0</obj_property>
+         <obj_property name="ObjectShortName">v0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/v1" type="array">
+         <obj_property name="ElementShortName">v1</obj_property>
+         <obj_property name="ObjectShortName">v1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/v2" type="array">
+         <obj_property name="ElementShortName">v2</obj_property>
+         <obj_property name="ObjectShortName">v2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/c0" type="array">
+         <obj_property name="ElementShortName">c0</obj_property>
+         <obj_property name="ObjectShortName">c0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/c1" type="array">
+         <obj_property name="ElementShortName">c1</obj_property>
+         <obj_property name="ObjectShortName">c1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/c2" type="array">
+         <obj_property name="ElementShortName">c2</obj_property>
+         <obj_property name="ObjectShortName">c2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/face_done" type="logic">
+         <obj_property name="ElementShortName">face_done</obj_property>
+         <obj_property name="ObjectShortName">face_done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/complete" type="logic">
+         <obj_property name="ElementShortName">complete</obj_property>
+         <obj_property name="ObjectShortName">complete</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/current_face" type="array">
+         <obj_property name="ElementShortName">current_face[0:17][15:-16]</obj_property>
+         <obj_property name="ObjectShortName">current_face[0:17][15:-16]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/rom_addr" type="array">
+         <obj_property name="ElementShortName">rom_addr[8:0]</obj_property>
+         <obj_property name="ObjectShortName">rom_addr[8:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/rom_data" type="array">
+         <obj_property name="ElementShortName">rom_data[0:215][31:0]</obj_property>
+         <obj_property name="ObjectShortName">rom_data[0:215][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/i" type="array">
+         <obj_property name="ElementShortName">i[5:0]</obj_property>
+         <obj_property name="ObjectShortName">i[5:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/state" type="array">
+         <obj_property name="ElementShortName">state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/FACE_COUNT" type="array">
+         <obj_property name="ElementShortName">FACE_COUNT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FACE_COUNT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/FILE" type="array">
+         <obj_property name="ElementShortName">FILE[63:0]</obj_property>
+         <obj_property name="ObjectShortName">FILE[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/VERTS_PER_FACE" type="array">
+         <obj_property name="ElementShortName">VERTS_PER_FACE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VERTS_PER_FACE[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/DIMS_PER_VERT" type="array">
+         <obj_property name="ElementShortName">DIMS_PER_VERT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DIMS_PER_VERT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/CHANS_PER_VERT" type="array">
+         <obj_property name="ElementShortName">CHANS_PER_VERT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CHANS_PER_VERT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/BITS_PER_VAL" type="array">
+         <obj_property name="ElementShortName">BITS_PER_VAL[31:0]</obj_property>
+         <obj_property name="ObjectShortName">BITS_PER_VAL[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/VALS_PER_FACE" type="array">
+         <obj_property name="ElementShortName">VALS_PER_FACE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">VALS_PER_FACE[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/ROM_WIDTH" type="array">
+         <obj_property name="ElementShortName">ROM_WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ROM_WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/model_loader/ROM_DEPTH" type="array">
+         <obj_property name="ElementShortName">ROM_DEPTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ROM_DEPTH[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3954" type="group">
+      <obj_property name="label">vt</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/matrix" type="array">
+         <obj_property name="ElementShortName">matrix</obj_property>
+         <obj_property name="ObjectShortName">matrix</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/v0" type="array">
+         <obj_property name="ElementShortName">v0</obj_property>
+         <obj_property name="ObjectShortName">v0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/v1" type="array">
+         <obj_property name="ElementShortName">v1</obj_property>
+         <obj_property name="ObjectShortName">v1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/v2" type="array">
+         <obj_property name="ElementShortName">v2</obj_property>
+         <obj_property name="ObjectShortName">v2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/v0_tr" type="array">
+         <obj_property name="ElementShortName">v0_tr</obj_property>
+         <obj_property name="ObjectShortName">v0_tr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/v1_tr" type="array">
+         <obj_property name="ElementShortName">v1_tr</obj_property>
+         <obj_property name="ObjectShortName">v1_tr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/v2_tr" type="array">
+         <obj_property name="ElementShortName">v2_tr</obj_property>
+         <obj_property name="ObjectShortName">v2_tr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/verts" type="array">
+         <obj_property name="ElementShortName">verts[0:2]</obj_property>
+         <obj_property name="ObjectShortName">verts[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/verts_ss" type="array">
+         <obj_property name="ElementShortName">verts_ss[0:2]</obj_property>
+         <obj_property name="ObjectShortName">verts_ss[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/verts_pd" type="array">
+         <obj_property name="ElementShortName">verts_pd[0:2]</obj_property>
+         <obj_property name="ObjectShortName">verts_pd[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/tr_start" type="logic">
+         <obj_property name="ElementShortName">tr_start</obj_property>
+         <obj_property name="ObjectShortName">tr_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/persp_div_start" type="logic">
+         <obj_property name="ElementShortName">persp_div_start</obj_property>
+         <obj_property name="ObjectShortName">persp_div_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/tr_done" type="array">
+         <obj_property name="ElementShortName">tr_done[0:2]</obj_property>
+         <obj_property name="ObjectShortName">tr_done[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/persp_div_done" type="array">
+         <obj_property name="ElementShortName">persp_div_done[0:2]</obj_property>
+         <obj_property name="ObjectShortName">persp_div_done[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/tr_done_r" type="array">
+         <obj_property name="ElementShortName">tr_done_r[0:2]</obj_property>
+         <obj_property name="ObjectShortName">tr_done_r[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/persp_div_done_r" type="array">
+         <obj_property name="ElementShortName">persp_div_done_r[0:2]</obj_property>
+         <obj_property name="ObjectShortName">persp_div_done_r[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/state" type="array">
+         <obj_property name="ElementShortName">state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/vt/V_COUNT" type="array">
+         <obj_property name="ElementShortName">V_COUNT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">V_COUNT[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3955" type="group">
+      <obj_property name="label">fb_inst</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/clk_sys" type="logic">
+         <obj_property name="ElementShortName">clk_sys</obj_property>
+         <obj_property name="ObjectShortName">clk_sys</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/clk_pix" type="logic">
+         <obj_property name="ElementShortName">clk_pix</obj_property>
+         <obj_property name="ObjectShortName">clk_pix</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/rst_sys" type="logic">
+         <obj_property name="ElementShortName">rst_sys</obj_property>
+         <obj_property name="ObjectShortName">rst_sys</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/rst_pix" type="logic">
+         <obj_property name="ElementShortName">rst_pix</obj_property>
+         <obj_property name="ObjectShortName">rst_pix</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/de" type="logic">
+         <obj_property name="ElementShortName">de</obj_property>
+         <obj_property name="ObjectShortName">de</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/frame" type="logic">
+         <obj_property name="ElementShortName">frame</obj_property>
+         <obj_property name="ObjectShortName">frame</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/line" type="logic">
+         <obj_property name="ElementShortName">line</obj_property>
+         <obj_property name="ObjectShortName">line</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/we" type="logic">
+         <obj_property name="ElementShortName">we</obj_property>
+         <obj_property name="ObjectShortName">we</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/x" type="array">
+         <obj_property name="ElementShortName">x[15:0]</obj_property>
+         <obj_property name="ObjectShortName">x[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/y" type="array">
+         <obj_property name="ElementShortName">y[15:0]</obj_property>
+         <obj_property name="ObjectShortName">y[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/col" type="array">
+         <obj_property name="ElementShortName">col[11:0]</obj_property>
+         <obj_property name="ObjectShortName">col[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/clip" type="logic">
+         <obj_property name="ElementShortName">clip</obj_property>
+         <obj_property name="ObjectShortName">clip</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/red" type="array">
+         <obj_property name="ElementShortName">red[3:0]</obj_property>
+         <obj_property name="ObjectShortName">red[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/green" type="array">
+         <obj_property name="ElementShortName">green[3:0]</obj_property>
+         <obj_property name="ObjectShortName">green[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/blue" type="array">
+         <obj_property name="ElementShortName">blue[3:0]</obj_property>
+         <obj_property name="ObjectShortName">blue[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/frame_sys" type="logic">
+         <obj_property name="ElementShortName">frame_sys</obj_property>
+         <obj_property name="ObjectShortName">frame_sys</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/fb_addr_read" type="array">
+         <obj_property name="ElementShortName">fb_addr_read[18:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_addr_read[18:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/fb_addr_write" type="array">
+         <obj_property name="ElementShortName">fb_addr_write[18:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_addr_write[18:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/fb_col_read" type="array">
+         <obj_property name="ElementShortName">fb_col_read[11:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_col_read[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/fb_col_read_p1" type="array">
+         <obj_property name="ElementShortName">fb_col_read_p1[11:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_col_read_p1[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/x_add" type="array">
+         <obj_property name="ElementShortName">x_add[15:0]</obj_property>
+         <obj_property name="ObjectShortName">x_add[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/fb_addr_line" type="array">
+         <obj_property name="ElementShortName">fb_addr_line[18:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_addr_line[18:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/fb_we" type="logic">
+         <obj_property name="ElementShortName">fb_we</obj_property>
+         <obj_property name="ObjectShortName">fb_we</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/we_in_p1" type="logic">
+         <obj_property name="ElementShortName">we_in_p1</obj_property>
+         <obj_property name="ObjectShortName">we_in_p1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/fb_col_write" type="array">
+         <obj_property name="ElementShortName">fb_col_write[11:0]</obj_property>
+         <obj_property name="ObjectShortName">fb_col_write[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/col_in_p1" type="array">
+         <obj_property name="ElementShortName">col_in_p1[11:0]</obj_property>
+         <obj_property name="ObjectShortName">col_in_p1[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_data_req" type="logic">
+         <obj_property name="ElementShortName">lb_data_req</obj_property>
+         <obj_property name="ObjectShortName">lb_data_req</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/cnt_h" type="array">
+         <obj_property name="ElementShortName">cnt_h[9:0]</obj_property>
+         <obj_property name="ObjectShortName">cnt_h[9:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_en_in" type="logic">
+         <obj_property name="ElementShortName">lb_en_in</obj_property>
+         <obj_property name="ObjectShortName">lb_en_in</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_en_out" type="logic">
+         <obj_property name="ElementShortName">lb_en_out</obj_property>
+         <obj_property name="ObjectShortName">lb_en_out</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_en_in_sr" type="array">
+         <obj_property name="ElementShortName">lb_en_in_sr[2:0]</obj_property>
+         <obj_property name="ObjectShortName">lb_en_in_sr[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_in_0" type="array">
+         <obj_property name="ElementShortName">lb_in_0[3:0]</obj_property>
+         <obj_property name="ObjectShortName">lb_in_0[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_in_1" type="array">
+         <obj_property name="ElementShortName">lb_in_1[3:0]</obj_property>
+         <obj_property name="ObjectShortName">lb_in_1[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_in_2" type="array">
+         <obj_property name="ElementShortName">lb_in_2[3:0]</obj_property>
+         <obj_property name="ObjectShortName">lb_in_2[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_out_0" type="array">
+         <obj_property name="ElementShortName">lb_out_0[3:0]</obj_property>
+         <obj_property name="ObjectShortName">lb_out_0[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_out_1" type="array">
+         <obj_property name="ElementShortName">lb_out_1[3:0]</obj_property>
+         <obj_property name="ObjectShortName">lb_out_1[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_out_2" type="array">
+         <obj_property name="ElementShortName">lb_out_2[3:0]</obj_property>
+         <obj_property name="ObjectShortName">lb_out_2[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/lb_en_out_p1" type="logic">
+         <obj_property name="ElementShortName">lb_en_out_p1</obj_property>
+         <obj_property name="ObjectShortName">lb_en_out_p1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/CORDW" type="array">
+         <obj_property name="ElementShortName">CORDW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CORDW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/WIDTH" type="array">
+         <obj_property name="ElementShortName">WIDTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WIDTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/HEIGHT" type="array">
+         <obj_property name="ElementShortName">HEIGHT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">HEIGHT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/CHANW" type="array">
+         <obj_property name="ElementShortName">CHANW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CHANW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/COLW" type="array">
+         <obj_property name="ElementShortName">COLW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">COLW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/SCALE" type="array">
+         <obj_property name="ElementShortName">SCALE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SCALE[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/F_IMAGE" type="array">
+         <obj_property name="ElementShortName">F_IMAGE[7:0]</obj_property>
+         <obj_property name="ObjectShortName">F_IMAGE[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/FB_PIXELS" type="array">
+         <obj_property name="ElementShortName">FB_PIXELS[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_PIXELS[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/FB_ADDRW" type="array">
+         <obj_property name="ElementShortName">FB_ADDRW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_ADDRW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/FB_DEPTH" type="array">
+         <obj_property name="ElementShortName">FB_DEPTH[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_DEPTH[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/FB_DATAW" type="array">
+         <obj_property name="ElementShortName">FB_DATAW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_DATAW[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/FB_DUALPORT" type="array">
+         <obj_property name="ElementShortName">FB_DUALPORT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">FB_DUALPORT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/LB_SCALE" type="array">
+         <obj_property name="ElementShortName">LB_SCALE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">LB_SCALE[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/LB_LEN" type="array">
+         <obj_property name="ElementShortName">LB_LEN[31:0]</obj_property>
+         <obj_property name="ObjectShortName">LB_LEN[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/LB_BPC" type="array">
+         <obj_property name="ElementShortName">LB_BPC[31:0]</obj_property>
+         <obj_property name="ObjectShortName">LB_BPC[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/fb_inst/LAT" type="array">
+         <obj_property name="ElementShortName">LAT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">LAT[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3956" type="group">
+      <obj_property name="label">draw_triangle_inst</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/rst" type="logic">
+         <obj_property name="ElementShortName">rst</obj_property>
+         <obj_property name="ObjectShortName">rst</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/oe" type="logic">
+         <obj_property name="ElementShortName">oe</obj_property>
+         <obj_property name="ObjectShortName">oe</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v0" type="array">
+         <obj_property name="ElementShortName">v0</obj_property>
+         <obj_property name="ObjectShortName">v0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v1" type="array">
+         <obj_property name="ElementShortName">v1</obj_property>
+         <obj_property name="ObjectShortName">v1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v2" type="array">
+         <obj_property name="ElementShortName">v2</obj_property>
+         <obj_property name="ObjectShortName">v2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/draw_pos" type="array">
+         <obj_property name="ElementShortName">draw_pos</obj_property>
+         <obj_property name="ObjectShortName">draw_pos</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/col" type="array">
+         <obj_property name="ElementShortName">col</obj_property>
+         <obj_property name="ObjectShortName">col</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/drawing" type="logic">
+         <obj_property name="ElementShortName">drawing</obj_property>
+         <obj_property name="ObjectShortName">drawing</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/done" type="logic">
+         <obj_property name="ElementShortName">done</obj_property>
+         <obj_property name="ObjectShortName">done</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v0s" type="array">
+         <obj_property name="ElementShortName">v0s</obj_property>
+         <obj_property name="ObjectShortName">v0s</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v1s" type="array">
+         <obj_property name="ElementShortName">v1s</obj_property>
+         <obj_property name="ObjectShortName">v1s</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v2s" type="array">
+         <obj_property name="ElementShortName">v2s</obj_property>
+         <obj_property name="ObjectShortName">v2s</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v0sf" type="array">
+         <obj_property name="ElementShortName">v0sf</obj_property>
+         <obj_property name="ObjectShortName">v0sf</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v1sf" type="array">
+         <obj_property name="ElementShortName">v1sf</obj_property>
+         <obj_property name="ObjectShortName">v1sf</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v2sf" type="array">
+         <obj_property name="ElementShortName">v2sf</obj_property>
+         <obj_property name="ObjectShortName">v2sf</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/ta_start" type="logic">
+         <obj_property name="ElementShortName">ta_start</obj_property>
+         <obj_property name="ObjectShortName">ta_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/ta_busy" type="logic">
+         <obj_property name="ElementShortName">ta_busy</obj_property>
+         <obj_property name="ObjectShortName">ta_busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/ta_backface" type="logic">
+         <obj_property name="ElementShortName">ta_backface</obj_property>
+         <obj_property name="ObjectShortName">ta_backface</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/ig_start" type="logic">
+         <obj_property name="ElementShortName">ig_start</obj_property>
+         <obj_property name="ObjectShortName">ig_start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/ig_busy" type="array">
+         <obj_property name="ElementShortName">ig_busy[0:2]</obj_property>
+         <obj_property name="ObjectShortName">ig_busy[0:2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/grads" type="array">
+         <obj_property name="ElementShortName">grads</obj_property>
+         <obj_property name="ObjectShortName">grads</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v0a" type="array">
+         <obj_property name="ElementShortName">v0a</obj_property>
+         <obj_property name="ObjectShortName">v0a</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v1a" type="array">
+         <obj_property name="ElementShortName">v1a</obj_property>
+         <obj_property name="ObjectShortName">v1a</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interp0a" type="array">
+         <obj_property name="ElementShortName">interp0a</obj_property>
+         <obj_property name="ObjectShortName">interp0a</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interp1a" type="array">
+         <obj_property name="ElementShortName">interp1a</obj_property>
+         <obj_property name="ObjectShortName">interp1a</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/xa" type="array">
+         <obj_property name="ElementShortName">xa[15:0]</obj_property>
+         <obj_property name="ObjectShortName">xa[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/ya" type="array">
+         <obj_property name="ElementShortName">ya[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ya[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interpa" type="array">
+         <obj_property name="ElementShortName">interpa</obj_property>
+         <obj_property name="ObjectShortName">interpa</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v0b" type="array">
+         <obj_property name="ElementShortName">v0b</obj_property>
+         <obj_property name="ObjectShortName">v0b</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/v1b" type="array">
+         <obj_property name="ElementShortName">v1b</obj_property>
+         <obj_property name="ObjectShortName">v1b</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interp0b" type="array">
+         <obj_property name="ElementShortName">interp0b</obj_property>
+         <obj_property name="ObjectShortName">interp0b</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interp1b" type="array">
+         <obj_property name="ElementShortName">interp1b</obj_property>
+         <obj_property name="ObjectShortName">interp1b</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/xb" type="array">
+         <obj_property name="ElementShortName">xb[15:0]</obj_property>
+         <obj_property name="ObjectShortName">xb[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/yb" type="array">
+         <obj_property name="ElementShortName">yb[15:0]</obj_property>
+         <obj_property name="ObjectShortName">yb[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interpb" type="array">
+         <obj_property name="ElementShortName">interpb</obj_property>
+         <obj_property name="ObjectShortName">interpb</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/x0h" type="array">
+         <obj_property name="ElementShortName">x0h[15:0]</obj_property>
+         <obj_property name="ObjectShortName">x0h[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/x1h" type="array">
+         <obj_property name="ElementShortName">x1h[15:0]</obj_property>
+         <obj_property name="ObjectShortName">x1h[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/xh" type="array">
+         <obj_property name="ElementShortName">xh[15:0]</obj_property>
+         <obj_property name="ObjectShortName">xh[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interp0h" type="array">
+         <obj_property name="ElementShortName">interp0h</obj_property>
+         <obj_property name="ObjectShortName">interp0h</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interp1h" type="array">
+         <obj_property name="ElementShortName">interp1h</obj_property>
+         <obj_property name="ObjectShortName">interp1h</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/interph" type="array">
+         <obj_property name="ElementShortName">interph</obj_property>
+         <obj_property name="ObjectShortName">interph</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/prev_y" type="array">
+         <obj_property name="ElementShortName">prev_y[15:0]</obj_property>
+         <obj_property name="ObjectShortName">prev_y[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/prev_xa" type="array">
+         <obj_property name="ElementShortName">prev_xa[15:0]</obj_property>
+         <obj_property name="ObjectShortName">prev_xa[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/prev_xb" type="array">
+         <obj_property name="ElementShortName">prev_xb[15:0]</obj_property>
+         <obj_property name="ObjectShortName">prev_xb[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/prev_interpa" type="array">
+         <obj_property name="ElementShortName">prev_interpa</obj_property>
+         <obj_property name="ObjectShortName">prev_interpa</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/prev_interpb" type="array">
+         <obj_property name="ElementShortName">prev_interpb</obj_property>
+         <obj_property name="ObjectShortName">prev_interpb</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/oe_a" type="logic">
+         <obj_property name="ElementShortName">oe_a</obj_property>
+         <obj_property name="ObjectShortName">oe_a</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/oe_b" type="logic">
+         <obj_property name="ElementShortName">oe_b</obj_property>
+         <obj_property name="ObjectShortName">oe_b</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/oe_h" type="logic">
+         <obj_property name="ElementShortName">oe_h</obj_property>
+         <obj_property name="ObjectShortName">oe_h</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/drawing_h" type="logic">
+         <obj_property name="ElementShortName">drawing_h</obj_property>
+         <obj_property name="ObjectShortName">drawing_h</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/busy_a" type="logic">
+         <obj_property name="ElementShortName">busy_a</obj_property>
+         <obj_property name="ObjectShortName">busy_a</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/busy_b" type="logic">
+         <obj_property name="ElementShortName">busy_b</obj_property>
+         <obj_property name="ObjectShortName">busy_b</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/busy_h" type="logic">
+         <obj_property name="ElementShortName">busy_h</obj_property>
+         <obj_property name="ObjectShortName">busy_h</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/b_edge" type="logic">
+         <obj_property name="ElementShortName">b_edge</obj_property>
+         <obj_property name="ObjectShortName">b_edge</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/busy_p1" type="logic">
+         <obj_property name="ElementShortName">busy_p1</obj_property>
+         <obj_property name="ObjectShortName">busy_p1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/done_p1" type="logic">
+         <obj_property name="ElementShortName">done_p1</obj_property>
+         <obj_property name="ObjectShortName">done_p1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/state" type="array">
+         <obj_property name="ElementShortName">state[31:0]</obj_property>
+         <obj_property name="ObjectShortName">state[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top_renderer_tb/uut/draw_triangle_inst/CORDW" type="array">
+         <obj_property name="ElementShortName">CORDW[31:0]</obj_property>
+         <obj_property name="ObjectShortName">CORDW[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

@@ -118,41 +118,40 @@ def perspective_divide(a):
 if __name__ == "__main__":
     import sys
 
-    v0 = [320, 160]
-    v1 = [240, 300]
-    v2 = [400, 320]
+    if 0:
+        v0 = [320, 160]
+        v1 = [240, 300]
+        v2 = [400, 320]
 
-    vs = [
-        [*v0, 0xF],
-        [*v1, 0x0],
-        [*v2, 0x0]
-    ]
+        vs = [
+            [*v0, 0xF],
+            [*v1, 0x0],
+            [*v2, 0x0]
+        ]
 
-    dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
-    print("Red gradients:  ", dz_dx, dz_dy)
+        dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
+        print("Red gradients:  ", dz_dx, dz_dy)
 
-    vs = [
-        [*v0, 0x0],
-        [*v1, 0xF],
-        [*v2, 0x0]
-    ]
-    dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
-    print("Green gradients:", dz_dx, dz_dy)
+        vs = [
+            [*v0, 0x0],
+            [*v1, 0xF],
+            [*v2, 0x0]
+        ]
+        dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
+        print("Green gradients:", dz_dx, dz_dy)
 
-    vs = [
-        [*v0, 0x0],
-        [*v1, 0x0],
-        [*v2, 0xF]
-    ]
+        vs = [
+            [*v0, 0x0],
+            [*v1, 0x0],
+            [*v2, 0xF]
+        ]
 
-    dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
-    print("Blue gradients: ", dz_dx, dz_dy)
+        dz_dx, dz_dy = graidients(vs[0], vs[1], vs[2])
+        print("Blue gradients: ", dz_dx, dz_dy)
 
-    sys.exit()
-
-    print(fixed_str_to_dec("0000000000000001_0000000000000000"))
-    print(fixed_str_to_dec("1111111111111101_1110111101111011"))
-    print(fixed_str_to_dec("1111111100010000_0000000000000000"))
+        print(fixed_str_to_dec("0000000000000001_0000000000000000"))
+        print(fixed_str_to_dec("1111111111111101_1110111101111011"))
+        print(fixed_str_to_dec("1111111100010000_0000000000000000"))
 
     identity = [
         [1, 0, 0, 0],
@@ -170,7 +169,7 @@ if __name__ == "__main__":
 
     proj = perspective_matrix(90.0, 640, 480, 1.0, 32.0)
 
-    translation = translation_matrix(0.0, 0.0, 3.0)
+    translation = translation_matrix(0.0, 0.0, 7.0)
     
     rot = rotation_matrix_y(315 * math.pi / 60.0)
     print(rot)
@@ -189,9 +188,17 @@ if __name__ == "__main__":
         [ 1.0, -1.0, 0.0, 1.0]
     ]
 
+    vs = [
+        [ 1.000000,  -1.000000,  1.000000, 1.0],
+        [-1.000000,  -1.000000,  1.000000, 1.0],
+        [-1.000000,  -1.000000, -1.000000, 1.0]
+    ]
+
     for v in vs:
         v_transformed = vecmult(mat, v)
         print(v, "->", [float(f"{p:.2f}") for p in v_transformed], "->", [float(f"{p:.2f}") for p in perspective_divide(v_transformed)])
+
+    sys.exit()
 
     values = [320.0, 160.0, 240.0, 320.0, 400.0, 320.0, 256, 256 / 90]
     for value in values:

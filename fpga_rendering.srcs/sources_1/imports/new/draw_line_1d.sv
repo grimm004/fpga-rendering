@@ -14,7 +14,7 @@ module draw_line_1d #(parameter CORDW=16) (  // signed coordinate width
     input  wire logic rst,             // reset
     input  wire logic start,           // start line drawing
     input  wire logic oe,              // output enable
-    input  wire gradients grads,       // Interpolant gradients
+//    input  wire gradients grads,       // Interpolant gradients
     input  wire interpolants interp0, interp1, // Interpolant values
     input  wire logic signed [CORDW-1:0] x0,   // point 0
     input  wire logic signed [CORDW-1:0] x1,   // point 1

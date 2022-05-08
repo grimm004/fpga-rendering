@@ -1,0 +1,7 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../fpga_rendering.gen/sources_1/ip/mult/sim/mult.vhd" \
+"../../../../fpga_rendering.gen/sources_1/ip/multadd/sim/multadd.vhd" \
+
+# Do not sort compile order
+nosort

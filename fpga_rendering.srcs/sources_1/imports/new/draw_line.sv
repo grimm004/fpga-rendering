@@ -30,7 +30,7 @@ module draw_line #(parameter CORDW=16) (  // signed coordinate width
     );
 
     interpolants interp_sorted;
-    gradients grads_sorted;
+//    gradients grads_sorted;
 
     // line properties
     logic swap;   // swap points to ensure y1 >= y0
@@ -114,7 +114,7 @@ module draw_line #(parameter CORDW=16) (  // signed coordinate width
                 dx <= right ? xb - xa : xa - xb;  // dx = abs(xb - xa)
                 dy <= ya - yb;  // dy = -abs(yb - ya)
 
-                grads_sorted <= grads;
+//                grads_sorted <= grads;
 
 //                grads_sorted.col_x.r <= right ? grads.col_x.r : -grads.col_x.r;
 //                grads_sorted.col_x.g <= right ? grads.col_x.g : -grads.col_x.g;

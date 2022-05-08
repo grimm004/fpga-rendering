@@ -2,11 +2,8 @@
 `timescale 1ns / 1ps
 
 import Utils::coli;
-import Utils::valf;
 import Utils::vec2i;
-import Utils::vec2f;
 import Utils::vert2i;
-import Utils::vert2f;
 
 module draw_triangle_fill_tb;
 
