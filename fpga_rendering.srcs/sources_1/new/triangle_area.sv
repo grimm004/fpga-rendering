@@ -45,7 +45,7 @@ module triangle_area (
                 state <= DONE;
             end
             DONE: begin
-                area <= double_area / 2;
+                area <= double_area >> 1;
                 done <= 1;
                 state <= IDLE;
             end

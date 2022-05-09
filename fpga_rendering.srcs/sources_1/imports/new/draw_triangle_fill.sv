@@ -36,18 +36,18 @@ module draw_triangle_fill #(
     assign v1sf = {{v1s.x, 16'b0}, {v1s.y, 16'b0}, {{12'b0, v1s.col.r, 16'b0}, {12'b0, v1s.col.g, 16'b0}, {12'b0, v1s.col.b, 16'b0}}};
     assign v2sf = {{v2s.x, 16'b0}, {v2s.y, 16'b0}, {{12'b0, v2s.col.r, 16'b0}, {12'b0, v2s.col.g, 16'b0}, {12'b0, v2s.col.b, 16'b0}}};
 
-    logic ta_start, ta_busy, ta_backface;
+    logic ta_start, ta_backface, ta_done;
 
     triangle_area ta (
         .clk,
         .start(ta_start),
-        .v({v0s.x, v0s.y}),
-        .va({v2s.x, v2s.y}),
-        .vb({v1s.x, v1s.y}),
+        .v({v0.x, v0.y}),
+        .va({v2.x, v2.y}),
+        .vb({v1.x, v1.y}),
         .handedness(ta_backface),
         .area(),
-        .busy(ta_busy),
-        .done()
+        .busy(),
+        .done(ta_done)
     );
 
     logic ig_start;
@@ -135,6 +135,8 @@ module draw_triangle_fill #(
     always_ff @(posedge clk) begin
         case (state)
             SORT_0: begin
+                ta_start <= 0;
+
                 state <= SORT_1;
                 if (v0.y > v2.y) begin
                     v0s <= v2;
@@ -162,15 +164,12 @@ module draw_triangle_fill #(
 
                 // Whilst we run INIT_A and INIT_B0, calculate the gradients
                 ig_start <= 1;
-                // Additiaonlly, calculate triangle area for backface culling
-                ta_start <= 1;
             end
             // Now v0s.y <= v1s.y <= v2s.y
             INIT_A: begin
                 state <= INIT_B0;
 
                 ig_start <= 0;
-                ta_start <= 0;
 
                 v0a <= v0s;
                 v1a <= v2s;
@@ -194,11 +193,8 @@ module draw_triangle_fill #(
                 prev_y <= v0s.y;
 
                 // Move to START_A when gradients are calculated
-                if (!ig_busy && !ta_busy) begin
-                    // Cancel render for triangle backface
-//                    state <= ta_backface ? DONE : START_A;
+                if (!ig_busy)
                     state <= START_A;
-                end
             end
             INIT_B1: begin
                 state <= START_B;  // we don't need to start A again
@@ -249,15 +245,18 @@ module draw_triangle_fill #(
             default: begin  // IDLE
                 if (start) begin
                     state <= SORT_0;
+                    ta_start <= 1;
                     busy_p1 <= 1;
                 end
-//                cancel <= 0;
                 done_p1 <= 0;
             end
         endcase
 
+        // Backface culling
+        if (ta_done && ta_backface)
+            state <= DONE;
+
         if (rst) begin
-//            cancel <= 0;
             state <= IDLE;
             busy_p1 <= 0;
             done_p1 <= 0;
