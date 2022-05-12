@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="seg7bcd_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="seg7bcd_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="15.998146667 ms"></ZoomStartTime>
+      <ZoomEndTime time="16.009356668 ms"></ZoomEndTime>
+      <Cursor1Time time="16.005686667 ms"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="217"></NameColumnWidth>
+      <ValueColumnWidth column_width="333"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="18" />
+   <wvobject fp_name="/seg7bcd_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg" type="array">
+      <obj_property name="ElementShortName">seg[6:0]</obj_property>
+      <obj_property name="ObjectShortName">seg[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/dp" type="logic">
+      <obj_property name="ElementShortName">dp</obj_property>
+      <obj_property name="ObjectShortName">dp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/an" type="array">
+      <obj_property name="ElementShortName">an[7:0]</obj_property>
+      <obj_property name="ObjectShortName">an[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/bin_in" type="array">
+      <obj_property name="ElementShortName">bin_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bin_in[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/bin_in" type="array">
+      <obj_property name="ElementShortName">bin_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bin_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/seg" type="array">
+      <obj_property name="ElementShortName">seg[6:0]</obj_property>
+      <obj_property name="ObjectShortName">seg[6:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/dp" type="logic">
+      <obj_property name="ElementShortName">dp</obj_property>
+      <obj_property name="ObjectShortName">dp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/an" type="array">
+      <obj_property name="ElementShortName">an[7:0]</obj_property>
+      <obj_property name="ObjectShortName">an[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/bcd" type="array">
+      <obj_property name="ElementShortName">bcd[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bcd[31:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/dd_start" type="logic">
+      <obj_property name="ElementShortName">dd_start</obj_property>
+      <obj_property name="ObjectShortName">dd_start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/dd_done" type="logic">
+      <obj_property name="ElementShortName">dd_done</obj_property>
+      <obj_property name="ObjectShortName">dd_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/counter" type="array">
+      <obj_property name="ElementShortName">counter[18:0]</obj_property>
+      <obj_property name="ObjectShortName">counter[18:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/state" type="array">
+      <obj_property name="ElementShortName">state[31:0]</obj_property>
+      <obj_property name="ObjectShortName">state[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/INPUT_WIDTH" type="array">
+      <obj_property name="ElementShortName">INPUT_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">INPUT_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/seg7bcd_tb/seg7/REFRESH_COUNT" type="array">
+      <obj_property name="ElementShortName">REFRESH_COUNT[31:0]</obj_property>
+      <obj_property name="ObjectShortName">REFRESH_COUNT[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

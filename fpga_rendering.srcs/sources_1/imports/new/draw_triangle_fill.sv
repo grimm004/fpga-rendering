@@ -21,6 +21,7 @@ module draw_triangle_fill #(
     input  wire logic  rst,            // reset
     input  wire logic  start,          // start triangle drawing
     input  wire logic  oe,             // output enable
+    input  wire logic  cull_backface,  // Enable backface culling
     input  wire vert2i v0, v1, v2,     // Triangle vertices
     output      vec2i  draw_pos,       // drawing position
     output      coli   col,            // Drawing colour
@@ -253,7 +254,7 @@ module draw_triangle_fill #(
         endcase
 
         // Backface culling
-        if (ta_done && ta_backface)
+        if (cull_backface && ta_done && ta_backface)
             state <= DONE;
 
         if (rst) begin

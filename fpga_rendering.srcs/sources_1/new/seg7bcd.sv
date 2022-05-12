@@ -6,7 +6,6 @@ module seg7bcd #(
     parameter INPUT_WIDTH=32
     ) (
     input  wire logic                   clk,
-    input  wire logic                   start,
     input  wire logic [INPUT_WIDTH-1:0] bin_in,
     output      logic [6:0]             seg,
     output      logic                   dp,
@@ -35,8 +34,23 @@ module seg7bcd #(
         .an
     );
 
+    parameter REFRESH_COUNT = 400000;
+
+    logic [$clog2(REFRESH_COUNT)-1:0] counter = 0;
+    logic start;
+
+    always @(posedge clk) begin
+        if (counter == REFRESH_COUNT - 1) begin
+            counter <= 0;
+            start <= 1;
+        end else begin
+            counter <= counter + 1;
+            start <= 0;
+        end
+    end
+
     enum {IDLE, DD} state;
-    always_ff @(posedge clk) begin
+    always @(posedge clk) begin
         case (state)
             IDLE: begin
                 if (start) begin

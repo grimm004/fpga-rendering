@@ -10,6 +10,7 @@ import Utils::mat4f;
 import Utils::vec3f;
 import Utils::vec4f;
 import Utils::valf;
+import Utils::coli;
 import Utils::colf;
 import Utils::vec2i;
 
@@ -17,6 +18,11 @@ module top_renderer (
     input  wire logic clk_100m,     // 100 MHz clock
     input  wire logic btn_rst,      // reset button (active low)
     input  wire logic [15:0] SW,    // Board switches
+    input  wire logic BTNC,
+    input  wire logic BTNU,
+    input  wire logic BTNL,
+    input  wire logic BTNR,
+    input  wire logic BTND,
     output      logic [15:0] LED,   // Board LEDs
     output      logic vga_hsync,    // horizontal sync
     output      logic vga_vsync,    // vertical sync
@@ -33,9 +39,21 @@ module top_renderer (
     localparam FB_HEIGHT  = 480;
     localparam FB_CHANW   = 4;
     localparam FB_COLW    = 3 * FB_CHANW;
-    localparam FB_CLEARCOL = 12'h000;
 
-    assign LED[9:0] = SW[9:0];
+    assign LED[11:0] = SW[11:0];
+    assign LED[15:13] = SW[15:13];
+    assign LED[12] = 0;
+
+    logic [31:0] bin_in;
+
+    // Frame Counter Output
+    seg7bcd seg7 (
+        .clk(clk_100m),
+        .bin_in,
+        .seg,
+        .dp,
+        .an
+    );
 
     // generate pixel clock
     logic clk_pix;
@@ -71,8 +89,7 @@ module top_renderer (
     xd xd_frame (.clk_i(clk_pix), .clk_o(clk_100m),
                  .rst_i(1'b0), .rst_o(1'b0), .i(frame), .o(frame_sys));
 
-//    logic busy;
-
+    // Matrices for transformation
     mat4f mat_scale = '{
         SW[2] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
         32'b0000000000000000_0000000000000000, SW[3] ? 32'b0000000000000000_1000000000000000 : 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
@@ -83,7 +100,7 @@ module top_renderer (
     mat4f mat_translation = {
         32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
         32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 
-        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000111_0000000000000000, 
+        32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000, 32'b0000000000000101_0000000000000000, 
         32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000001_0000000000000000
     };
 
@@ -163,9 +180,9 @@ module top_renderer (
             mtr_start <= 1;
     end
 
-    // Current world-space vertices
+    // Current world-space vertex positions
     vec3f v [0:2];
-    // Vertex colours
+    // Current vertex colours
     colf vc [0:2];
 
     localparam MODEL_FACE_COUNT  = 12;
@@ -188,6 +205,9 @@ module top_renderer (
         .complete(model_complete)
     );
 
+    vec3f v_fixed [0:2];
+    colf vc_fixed [0:2];
+
     // Start vertex transform flag
     logic vtr_start;
     // Vertex transform busy and done flags
@@ -200,9 +220,9 @@ module top_renderer (
         .clk(clk_100m),
         .start(vtr_start),
         .matrix(mat_tr),
-        .v0({v[0], 32'b0000000000000001_0000000000000000}),
-        .v1({v[1], 32'b0000000000000001_0000000000000000}),
-        .v2({v[2], 32'b0000000000000001_0000000000000000}),
+        .v0({SW[15] ? v[0] : v_fixed[0], 32'b0000000000000001_0000000000000000}),  // Convert vertex position from vec3f to vec4f
+        .v1({SW[15] ? v[1] : v_fixed[1], 32'b0000000000000001_0000000000000000}),
+        .v2({SW[15] ? v[2] : v_fixed[2], 32'b0000000000000001_0000000000000000}),
         .v0_tr(v_tr[0]),
         .v1_tr(v_tr[1]),
         .v2_tr(v_tr[2]),
@@ -211,12 +231,14 @@ module top_renderer (
     );
 
     logic fb_we;  // write enable
-    vec2i draw_pos;  // draw coordinates
-    logic [FB_COLW-1:0] fb_col;  // draw colour
+    vec2i fb_draw_pos;  // draw coordinates
+    coli fb_col;  // draw colour
     logic fb_busy;  // when framebuffer is busy it cannot accept writes
     logic [FB_CHANW-1:0] fb_red, fb_green, fb_blue;  // colours for display output
     logic fb_clearing;
-    logic signed [CORDW-1:0] fb_clearx, fb_cleary;  // clear coordinates
+    vec2i fb_clear_pos;  // clear coordinates
+    coli fb_clearcol;
+    assign fb_clearcol = SW[11] ? 12'hFFF : 12'h000;
 
     framebuffer_bram #(
         .WIDTH(FB_WIDTH),
@@ -233,9 +255,9 @@ module top_renderer (
         .frame,
         .line,
         .we(fb_we),
-        .x(fb_clearing ? fb_clearx : draw_pos.x),
-        .y(fb_clearing ? fb_cleary : draw_pos.y),
-        .col(fb_clearing ? FB_CLEARCOL : fb_col),
+        .x(fb_clearing ? fb_clear_pos.x : fb_draw_pos.x),
+        .y(fb_clearing ? fb_clear_pos.y : fb_draw_pos.y),
+        .col(fb_clearing ? fb_clearcol : fb_col),
         /* verilator lint_off PINCONNECTEMPTY */
         .clip(),
         /* verilator lint_on PINCONNECTEMPTY */
@@ -248,7 +270,37 @@ module top_renderer (
     // draw triangles in framebuffer
     localparam SHAPE_CNT=2;  // number of shapes to draw
     logic [1:0] shape_id;    // shape identifier
-    logic draw_start, drawing, draw_done;  // drawing signals
+    logic draw_start, drawing, draw_done, cull_backface;  // drawing signals
+    assign cull_backface = SW[10];
+
+    logic [26:0] pipeline_timer = 0;
+    logic [26:0] pipeline_timer_min = '1;
+    logic [26:0] pipeline_timer_max = 0;
+    enum {CURRENT, MIN, MAX} seg7_state;
+    always_ff @(posedge clk_100m) begin
+        if (state == DONE) begin
+            if (pipeline_timer < pipeline_timer_min)
+                pipeline_timer_min <= pipeline_timer;
+            else if (pipeline_timer > pipeline_timer_max)
+                pipeline_timer_max <= pipeline_timer;
+            case (seg7_state)
+                CURRENT: bin_in <= pipeline_timer;
+                MIN: bin_in <= pipeline_timer_min;
+                MAX: bin_in <= pipeline_timer_max;
+            endcase
+            pipeline_timer <= 0;
+        end else if (state != IDLE)
+            pipeline_timer <= pipeline_timer + 1;
+
+        if (BTNC) seg7_state <= CURRENT;
+        else if (BTND) seg7_state <= MIN;
+        else if (BTNU) seg7_state <= MAX;
+        if (BTNL) begin
+            bin_in <= 0;
+            pipeline_timer_min = '1;
+            pipeline_timer_max = 0;
+        end
+    end
 
     // draw state machine
     enum {IDLE, CLEAR_INIT, CLEAR, INIT, TRANSFORM, DRAW, DONE} state;
@@ -260,102 +312,110 @@ module top_renderer (
             end
             CLEAR: begin // Clear screen
                 if (!fb_busy) begin
-                    fb_clearx <= fb_clearx + 1;
-                    if (fb_clearx == FB_WIDTH) begin
-                        fb_clearx <= 0;
-                        fb_cleary <= fb_cleary + 1;
-                        if (fb_cleary == FB_HEIGHT) begin
+                    fb_clear_pos.x <= fb_clear_pos.x + 1;
+                    if (fb_clear_pos.x == FB_WIDTH) begin
+                        fb_clear_pos.x <= 0;
+                        fb_clear_pos.y <= fb_clear_pos.y + 1;
+                        if (fb_clear_pos.y == FB_HEIGHT) begin
                             fb_clearing <= 0;
-                            fb_cleary   <= 0;
+                            fb_clear_pos.y   <= 0;
                             state       <= INIT;
-                            face_start  <= 1;
+                            if (SW[15])
+                                face_start  <= 1;
                         end
                     end
                 end
             end
             INIT: begin  // register coordinates and colour
-                face_start  <= 0;
+                if (SW[15]) begin
 
-                if (face_done) begin
+                    face_start  <= 0;
+                    if (face_done) begin
+                        state <= TRANSFORM;
+                        vtr_start <= 1;
+                    end
+
+                end else begin
                     state <= TRANSFORM;
                     vtr_start <= 1;
+
+                    case (shape_id)
+                        2'd0: begin
+                            if (SW[8]) begin
+                                v_fixed[0].x <= 32'b0000000000000000_0000000000000000 + 32'b0000000000000001_0000000000000000; v_fixed[0].y <= 32'b0000000000000000_1000000000000000; v_fixed[0].z <= 32'b0000000000000000_0000000000000000;
+                                v_fixed[1].x <= 32'b1111111111111111_1000000000000000 + 32'b0000000000000001_0000000000000000; v_fixed[1].y <= 32'b1111111111111111_1000000000000000; v_fixed[1].z <= 32'b0000000000000000_0000000000000000;
+                                v_fixed[2].x <= 32'b0000000000000000_1000000000000000 + 32'b0000000000000001_0000000000000000; v_fixed[2].y <= 32'b1111111111111111_1000000000000000; v_fixed[2].z <= 32'b0000000000000000_0000000000000000;
+                            end else begin
+                                v_fixed[0].x <= 32'b0000000000000000_0000000000000000; v_fixed[0].y <= 32'b0000000000000000_1000000000000000; v_fixed[0].z <= 32'b0000000000000000_0000000000000000;
+                                v_fixed[1].x <= 32'b1111111111111111_1000000000000000; v_fixed[1].y <= 32'b1111111111111111_1000000000000000; v_fixed[1].z <= 32'b0000000000000000_0000000000000000;
+                                v_fixed[2].x <= 32'b0000000000000000_1000000000000000; v_fixed[2].y <= 32'b1111111111111111_1000000000000000; v_fixed[2].z <= 32'b0000000000000000_0000000000000000;
+                            end
+    
+                            if (SW[4])
+                                if (SW[9])
+                                    vc_fixed[0] <= {32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+                                else
+                                    vc_fixed[0] <= {32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000};
+                            else
+                                vc_fixed[0] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+    
+                            if (SW[5])
+                                if (SW[9])
+                                    vc_fixed[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000};
+                                else
+                                    vc_fixed[1] <= {32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000};
+                            else
+                                vc_fixed[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+    
+                            if (SW[6])
+                                if (SW[9])
+                                    vc_fixed[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000};
+                                else
+                                    vc_fixed[2] <= {32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000};
+                            else
+                                vc_fixed[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+    
+    //                        vc[0] <= SW[4] ? (SW[9] ? 12'hF00 : 12'hFFF) : 12'h000;
+    //                        vc[1] <= SW[5] ? (SW[9] ? 12'h0F0 : 12'hFFF) : 12'h000;
+    //                        vc[2] <= SW[6] ? (SW[9] ? 12'h00F : 12'hFFF) : 12'h000;
+                        end
+                        2'd1: begin
+                            v_fixed[0].x <= 32'b0000000000000000_0000000000000000 - 32'b0000000000000001_0000000000000000; v_fixed[0].y <= 32'b0000000000000000_1000000000000000; v_fixed[0].z <= 32'b0000000000000000_0000000000000000;
+                            v_fixed[1].x <= 32'b1111111111111111_1000000000000000 - 32'b0000000000000001_0000000000000000; v_fixed[1].y <= 32'b1111111111111111_1000000000000000; v_fixed[1].z <= 32'b0000000000000000_0000000000000000;
+                            v_fixed[2].x <= 32'b0000000000000000_1000000000000000 - 32'b0000000000000001_0000000000000000; v_fixed[2].y <= 32'b1111111111111111_1000000000000000; v_fixed[2].z <= 32'b0000000000000000_0000000000000000;
+    
+    
+                            if (SW[4])
+                                vc_fixed[0] <= {32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+                            else
+                                vc_fixed[0] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+    
+                            if (SW[5])
+                                vc_fixed[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000};
+                            else
+                                vc_fixed[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+    
+                            if (SW[6])
+                                vc_fixed[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000};
+                            else
+                                vc_fixed[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
+    
+    //                        vc[0] <= SW[4] ? 12'hF00 : 12'h000;
+    //                        vc[1] <= SW[5] ? 12'h0F0 : 12'h000;
+    //                        vc[2] <= SW[6] ? 12'h00F : 12'h000;
+                        end
+                        default: begin  // should never occur
+                            v_fixed[0].x <= 32'b0000000000000000_0000000000000000; v_fixed[0].y <= 32'b0000000000000000_0000000000000000; v_fixed[0].z <= 32'b0000000000000000_0000000000000000;
+                            v_fixed[1].x <= 32'b0000000000000001_0000000000000000; v_fixed[1].y <= 32'b0000000000000000_0000000000000000; v_fixed[1].z <= 32'b0000000000000000_0000000000000000;
+                            v_fixed[2].x <= 32'b0000000000000000_0000000000000000; v_fixed[2].y <= 32'b0000000000000001_0000000000000000; v_fixed[2].z <= 32'b0000000000000000_0000000000000000;
+    
+                            vc_fixed[0] <= {3{32'h000C0000}};
+                            vc_fixed[1] <= {3{32'h000C0000}};
+                            vc_fixed[2] <= {3{32'h000C0000}};
+                        end
+                    endcase
+
                 end
-
-//                case (shape_id)
-//                    2'd0: begin
-//                        if (SW[8]) begin
-//                            v[0].x <= 32'b0000000000000000_0000000000000000 + 32'b0000000000000001_0000000000000000; v[0].y <= 32'b0000000000000000_1000000000000000; v[0].z <= 32'b0000000000000000_0000000000000000;
-//                            v[1].x <= 32'b1111111111111111_1000000000000000 + 32'b0000000000000001_0000000000000000; v[1].y <= 32'b1111111111111111_1000000000000000; v[1].z <= 32'b0000000000000000_0000000000000000;
-//                            v[2].x <= 32'b0000000000000000_1000000000000000 + 32'b0000000000000001_0000000000000000; v[2].y <= 32'b1111111111111111_1000000000000000; v[2].z <= 32'b0000000000000000_0000000000000000;
-//                        end else begin
-//                            v[0].x <= 32'b0000000000000000_0000000000000000; v[0].y <= 32'b0000000000000000_1000000000000000; v[0].z <= 32'b0000000000000000_0000000000000000;
-//                            v[1].x <= 32'b1111111111111111_1000000000000000; v[1].y <= 32'b1111111111111111_1000000000000000; v[1].z <= 32'b0000000000000000_0000000000000000;
-//                            v[2].x <= 32'b0000000000000000_1000000000000000; v[2].y <= 32'b1111111111111111_1000000000000000; v[2].z <= 32'b0000000000000000_0000000000000000;
-//                        end
-
-//                        if (SW[4])
-//                            if (SW[9])
-//                                vc[0] <= {32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-//                            else
-//                                vc[0] <= {32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000};
-//                        else
-//                            vc[0] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-
-//                        if (SW[5])
-//                            if (SW[9])
-//                                vc[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000};
-//                            else
-//                                vc[1] <= {32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000};
-//                        else
-//                            vc[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-
-//                        if (SW[6])
-//                            if (SW[9])
-//                                vc[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000};
-//                            else
-//                                vc[2] <= {32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000001111_0000000000000000};
-//                        else
-//                            vc[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-
-////                        vc[0] <= SW[4] ? (SW[9] ? 12'hF00 : 12'hFFF) : 12'h000;
-////                        vc[1] <= SW[5] ? (SW[9] ? 12'h0F0 : 12'hFFF) : 12'h000;
-////                        vc[2] <= SW[6] ? (SW[9] ? 12'h00F : 12'hFFF) : 12'h000;
-//                    end
-//                    2'd1: begin
-//                        v[0].x <= 32'b0000000000000000_0000000000000000 - 32'b0000000000000001_0000000000000000; v[0].y <= 32'b0000000000000000_1000000000000000; v[0].z <= 32'b0000000000000000_0000000000000000;
-//                        v[1].x <= 32'b1111111111111111_1000000000000000 - 32'b0000000000000001_0000000000000000; v[1].y <= 32'b1111111111111111_1000000000000000; v[1].z <= 32'b0000000000000000_0000000000000000;
-//                        v[2].x <= 32'b0000000000000000_1000000000000000 - 32'b0000000000000001_0000000000000000; v[2].y <= 32'b1111111111111111_1000000000000000; v[2].z <= 32'b0000000000000000_0000000000000000;
-
-
-//                        if (SW[4])
-//                            vc[0] <= {32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-//                        else
-//                            vc[0] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-
-//                        if (SW[5])
-//                            vc[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000, 32'b0000000000000000_0000000000000000};
-//                        else
-//                            vc[1] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-
-//                        if (SW[6])
-//                            vc[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000001111_0000000000000000};
-//                        else
-//                            vc[2] <= {32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000, 32'b0000000000000000_0000000000000000};
-
-////                        vc[0] <= SW[4] ? 12'hF00 : 12'h000;
-////                        vc[1] <= SW[5] ? 12'h0F0 : 12'h000;
-////                        vc[2] <= SW[6] ? 12'h00F : 12'h000;
-//                    end
-//                    default: begin  // should never occur
-//                        v[0].x <= 32'b0000000000000000_0000000000000000; v[0].y <= 32'b0000000000000000_0000000000000000; v[0].z <= 32'b0000000000000000_0000000000000000;
-//                        v[1].x <= 32'b0000000000000001_0000000000000000; v[1].y <= 32'b0000000000000000_0000000000000000; v[1].z <= 32'b0000000000000000_0000000000000000;
-//                        v[2].x <= 32'b0000000000000000_0000000000000000; v[2].y <= 32'b0000000000000001_0000000000000000; v[2].z <= 32'b0000000000000000_0000000000000000;
-
-//                        vc[0] <= {3{32'h000C0000}};
-//                        vc[1] <= {3{32'h000C0000}};
-//                        vc[2] <= {3{32'h000C0000}};
-//                    end
-//                endcase
             end
             TRANSFORM: begin
                 vtr_start <= 0;
@@ -368,20 +428,24 @@ module top_renderer (
             DRAW: begin
                 draw_start <= 0;
                 if (draw_done) begin
-//                    if (shape_id == SHAPE_CNT-1) begin
-                    if (model_complete) begin
-                        model_reset = 1;
+                    if (SW[15] ? model_complete : shape_id == (SW[8] ? SHAPE_CNT-1 : 0)) begin
+                        if (SW[15])
+                            model_reset = 1;
                         state <= DONE;
                     end else begin
-//                        shape_id <= shape_id + 1;
-                        face_start = 1;
+                        if (SW[15])
+                            face_start = 1;
+                        else
+                            shape_id <= shape_id + 1;
                         state <= INIT;
                     end
                 end
             end
             DONE: begin
-//                shape_id <= 0;
-                model_reset = 0;
+                if (SW[15])
+                    model_reset = 0;
+                else
+                    shape_id <= 0;
                 state <= IDLE;
             end
             default: begin  // IDLE
@@ -398,10 +462,11 @@ module top_renderer (
         .rst(1'b0),
         .start(draw_start),
         .oe(!fb_busy),
-        .v0({v_tr[0].x[15:0], v_tr[0].y[15:0], {vc[0].r[3:0], vc[0].g[3:0], vc[0].b[3:0]}}),
-        .v1({v_tr[1].x[15:0], v_tr[1].y[15:0], {vc[1].r[3:0], vc[1].g[3:0], vc[1].b[3:0]}}),
-        .v2({v_tr[2].x[15:0], v_tr[2].y[15:0], {vc[2].r[3:0], vc[2].g[3:0], vc[2].b[3:0]}}),
-        .draw_pos,
+        .cull_backface,
+        .v0({v_tr[0].x[15:0], v_tr[0].y[15:0], SW[15] ? {vc[0].r[3:0], vc[0].g[3:0], vc[0].b[3:0]} : {vc_fixed[0].r[3:0], vc_fixed[0].g[3:0], vc_fixed[0].b[3:0]}}),
+        .v1({v_tr[1].x[15:0], v_tr[1].y[15:0], SW[15] ? {vc[1].r[3:0], vc[1].g[3:0], vc[1].b[3:0]} : {vc_fixed[1].r[3:0], vc_fixed[1].g[3:0], vc_fixed[1].b[3:0]}}),
+        .v2({v_tr[2].x[15:0], v_tr[2].y[15:0], SW[15] ? {vc[2].r[3:0], vc[2].g[3:0], vc[2].b[3:0]} : {vc_fixed[2].r[3:0], vc_fixed[2].g[3:0], vc_fixed[2].b[3:0]}}),
+        .draw_pos(fb_draw_pos),
         .drawing,
         /* verilator lint_off PINCONNECTEMPTY */
         .busy(),
@@ -412,9 +477,6 @@ module top_renderer (
 
     // write to framebuffer when drawing
     always_comb fb_we = drawing || fb_clearing;
-
-    // Either frame buffer, matrix transform, or vertex transform is busy
-//    always_comb busy = fb_busy || mtr_busy || vtr_busy;
 
     // reading from FB takes one cycle: delay display signals to match
     logic hsync_p1, vsync_p1;
